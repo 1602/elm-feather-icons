@@ -1,0 +1,18 @@
+{
+  "name": "elm-feather-icons",
+  "version": "1.0.0",
+  "description": "Feather icons for elm",
+  "author": "Anatoliy Chakkaev",
+  "license": "BSD",
+  "scripts": {
+    "start": "elm-live src/Main.elm --output=elm.js --open",
+    "deploy": "elm-make src/Main.elm --yes --output=dist/elm.js && uglifyjs dist/elm.js > dist/elm.min.js && gh-pages -d dist"
+  },
+  "devDependencies": {
+    "elm": "^0.18.0",
+    "elm-live": "^2.7.4",
+    "elm-test": "^0.18.7",
+    "gh-pages": "^1.0.0",
+    "uglify-js": "^3.1.3"
+  }
+}
