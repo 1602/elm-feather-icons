@@ -1,4 +1,15 @@
-module Styles exposing (stylesheet, Styles(None, PickableCard, SearchInput, IconButton), Variations(Selected, Hidden))
+module Styles
+    exposing
+        ( stylesheet
+        , Styles
+            ( None
+            , PickableCard
+            , SearchInput
+            , IconButton
+            , Tooltip
+            )
+        , Variations(Selected, Hidden)
+        )
 
 import Style exposing (Property, style, StyleSheet, prop, hover)
 import Color
@@ -12,6 +23,7 @@ type Styles
     | PickableCard
     | SearchInput
     | IconButton
+    | Tooltip
 
 
 type Variations
@@ -102,5 +114,20 @@ stylesheet =
                 , prop "color" "rgba(0,0,0,.26)"
                 , prop "cursor" "default"
                 ]
+            ]
+        , style Tooltip
+            --[ prop "transform" "scale(0)"
+            [ prop "transform-origin" "top center"
+            , prop "z-index" "999"
+            , Color.background <| Color.rgba 97 97 97 0.9
+            , Color.text Color.white
+            , Border.rounded 2
+            , Font.size 10
+            , Font.weight 500
+            , prop "line-height" "14px"
+            , monospaceFont
+            , prop "max-width" "170px"
+            , prop "padding" "8px"
+            , prop "text-align" "center"
             ]
         ]

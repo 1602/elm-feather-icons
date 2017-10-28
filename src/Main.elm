@@ -1,5 +1,7 @@
 port module Main exposing (main)
 
+import Process
+import Task
 import Html exposing (Html)
 import HtmlParser exposing (Node(Element, Text), parse)
 import HtmlParser.Util exposing (toVirtualDomSvg)
@@ -26,7 +28,18 @@ import Element.Attributes as Attributes
         , percent
         )
 import Element exposing (Element, el, row, text, column, empty)
-import Styles exposing (Styles(None, PickableCard, SearchInput, IconButton), Variations(Selected, Hidden), stylesheet)
+import Styles
+    exposing
+        ( Styles
+            ( None
+            , PickableCard
+            , SearchInput
+            , IconButton
+            , Tooltip
+            )
+        , Variations(Selected, Hidden)
+        , stylesheet
+        )
 import Icons
 
 
@@ -44,20 +57,23 @@ type Msg
     = Search String
     | ToggleIconSelection String
     | CopyToClipboard
+    | Copied
     | DownloadFile
 
 
 type alias Model =
-    { icons : List ( String, Html Msg, List Node )
-    , search : String
+    { search : String
+    , copied : Bool
+    , icons : List ( String, Html Msg, List Node )
     , selectedIcons : List String
     }
 
 
 blankModel : Model
 blankModel =
-    { icons = []
-    , search = ""
+    { search = ""
+    , copied = False
+    , icons = []
     , selectedIcons = []
     }
 
@@ -66,7 +82,7 @@ init : Value -> ( Model, Cmd Msg )
 init data =
     let
         decoder =
-            Decode.map3 Model
+            Decode.map2 (Model "" False)
                 (field "icons" <|
                     Decode.map
                         (List.reverse
@@ -86,7 +102,6 @@ init data =
                     <|
                         Decode.keyValuePairs string
                 )
-                (field "search" string)
                 (field "selectedIcons" <| Decode.list string)
 
         model =
@@ -123,7 +138,10 @@ update msg model =
                 { model | selectedIcons = selectedIcons } ! [ saveSelectedIcons selectedIcons ]
 
         CopyToClipboard ->
-            model ! [ renderCode model.icons model.selectedIcons |> copyToClipboard ]
+            { model | copied = True } ! [ renderCode model.icons model.selectedIcons |> copyToClipboard, Process.sleep 500 |> Task.perform (\_ -> Copied) ]
+
+        Copied ->
+            { model | copied = False } ! []
 
         DownloadFile ->
             model ! [ renderCode model.icons model.selectedIcons |> downloadFile ]
@@ -144,6 +162,13 @@ view model =
                 [ Icons.clipboard
                     |> Element.html
                     |> el IconButton [ onClick CopyToClipboard, alignRight ]
+                    |> el None []
+                    |> Element.above
+                        [ if model.copied then
+                            el Tooltip [] <| text "Copied!"
+                          else
+                            empty
+                        ]
                 , Icons.download
                     |> Element.html
                     |> el IconButton [ onClick DownloadFile, alignRight ]
