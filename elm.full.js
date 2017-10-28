@@ -30848,7 +30848,7 @@ var _user$project$Styles$stylesheet = A2(
 		}
 	});
 
-var _user$project$Main$codeHeader = '\n\nimport Html exposing (Html)\nimport Svg exposing (Svg, svg)\nimport Svg.Attributes exposing (..)\n\n\nsvgFeatherIcon : String -> List (Svg msg) -> Html msg\nsvgFeatherIcon className =\n    svg\n        [ class <| \"feather feather-\" ++ className\n        , fill \"none\"\n        , height \"24\"\n        , stroke \"currentColor\"\n        , strokeLinecap \"round\"\n        , strokeLinejoin \"round\"\n        , strokeWidth \"2\"\n        , viewBox \"0 0 24 24\"\n        , width \"24\"\n        ]\n\n';
+var _user$project$Main$codeHeader = '\n\nimport Html exposing (Html)\nimport Svg exposing (Svg, svg)\nimport Svg.Attributes exposing (..)\n\n\nsvgFeatherIcon : String -> List (Svg msg) -> Html msg\nsvgFeatherIcon className =\n    svg\n        [ class <| \"feather feather-\" ++ className\n        , fill \"none\"\n        , height \"24\"\n        , stroke \"currentColor\"\n        , strokeLinecap \"round\"\n        , strokeLinejoin \"round\"\n        , strokeWidth \"2\"\n        , viewBox \"0 0 24 24\"\n        , width \"24\"\n        ]\n\n\n';
 var _user$project$Main$printAttrs = function (attrs) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
