@@ -1,26 +1,31 @@
 <!doctype html>
 <head>
     <meta charset="utf-8" />
-    <title>Automation Cloud Client</title>
+    <title>Feather Icons for elm</title>
     <!--link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/gruvbox-dark.min.css"-->
     <!--link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/gruvbox-light.min.css"-->
     <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-light.min.css"-->
     <!--script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script-->
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500|Roboto+Mono|Roboto+Condensed:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/gruvbox-dark.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+
 <link rel="icon" type="image/gif" href="https://feathericons.com/assets/favicon.png">
 </head>
 
 <body>
 <script src="elm.js"></script>
 <script>
-let data = null;
+const data =
+    { icons: feather.icons
+    , search: localStorage.search || ""
+    , selectedIcons : localStorage.selectedIcons ? JSON.parse(localStorage.selectedIcons) : []
+    }
 
-try {
-    data = JSON.parse(localStorage.featherAppData);
-} catch(e) {
-    data = null;
-}
+console.log(data);
+const elm = Elm.Main.fullscreen(data);
 
-const elm = Elm.Main.fullscreen(data || {});
+elm.ports.saveSelectedIcons.subscribe(selectedIcons => localStorage.selectedIcons = JSON.stringify(selectedIcons));
 </script>
 </body>

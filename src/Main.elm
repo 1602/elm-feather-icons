@@ -1,8 +1,31 @@
-module Main exposing (main)
+port module Main exposing (main)
 
-import Html exposing (Html, text)
-import HtmlParser
-import Json.Encode exposing (Value)
+import Html exposing (Html)
+import HtmlParser exposing (Node(Element), parse)
+import HtmlParser.Util exposing (toVirtualDomSvg)
+import Json.Decode as Decode exposing (Value, field, string)
+import Svg exposing (Svg, svg)
+import Svg.Attributes as SvgAttrs
+import Element.Events exposing (onClick, onInput)
+import Regex exposing (regex, replace, HowMany(All))
+import Element.Attributes as Attributes
+    exposing
+        ( verticalCenter
+        , center
+        , vary
+        , inlineStyle
+        , spacing
+        , padding
+        , height
+        , minWidth
+        , width
+        , yScrollbar
+        , fill
+        , px
+        , percent
+        )
+import Element exposing (Element, el, row, text, column, empty)
+import Styles exposing (Styles(None, PickableCard, SearchInput), Variations(Selected, Hidden), stylesheet)
 
 
 main : Program Value Model Msg
@@ -16,23 +39,236 @@ main =
 
 
 type Msg
-    = NoOp
+    = Search String
+    | ToggleIconSelection String
 
 
 type alias Model =
-    {}
+    { icons : List ( String, Html Msg, List Node )
+    , search : String
+    , selectedIcons : List String
+    }
+
+
+blankModel : Model
+blankModel =
+    { icons = []
+    , search = ""
+    , selectedIcons = []
+    }
 
 
 init : Value -> ( Model, Cmd Msg )
 init data =
-    (Model) ! []
+    let
+        decoder =
+            Decode.map3 Model
+                (field "icons" <|
+                    Decode.map
+                        (List.reverse
+                            >> (List.map
+                                    (\( name, icon ) ->
+                                        let
+                                            nodes =
+                                                icon |> parse
+                                        in
+                                            ( name
+                                            , nodes |> toVirtualDomSvg |> svgFeatherIcon name
+                                            , nodes
+                                            )
+                                    )
+                               )
+                        )
+                    <|
+                        Decode.keyValuePairs string
+                )
+                (field "search" string)
+                (field "selectedIcons" <| Decode.list string)
+
+        model =
+            data
+                |> Decode.decodeValue decoder
+                |> Result.withDefault blankModel
+    in
+        model ! []
+
+
+port saveSelectedIcons : List String -> Cmd msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    model ! []
+    case msg of
+        Search s ->
+            { model | search = s } ! []
+
+        ToggleIconSelection name ->
+            let
+                selectedIcons =
+                    if List.member name model.selectedIcons then
+                        model.selectedIcons |> List.filter ((/=) name)
+                    else
+                        (name :: model.selectedIcons) |> List.sort
+            in
+                { model | selectedIcons = selectedIcons } ! [ saveSelectedIcons selectedIcons ]
+
+
+type alias View =
+    Element Styles Variations Msg
 
 
 view : Model -> Html Msg
 view model =
-    "hello" |> text
+    Element.viewport stylesheet <|
+        column None
+            [ height <| fill 1
+            , width <| fill 1
+            ]
+            [ model.search
+                |> Element.inputText SearchInput
+                    [ onInput Search
+                    , Attributes.placeholder "Search icon"
+                    , width <| px 400
+                    , padding 10
+                    ]
+                |> el None [ padding 50 ]
+            , row None
+                [ height <| fill 1 ]
+                [ model.icons
+                    |> List.map
+                        (\( name, icon, _ ) ->
+                            [ icon
+                                |> Element.html
+                            , text name
+                            ]
+                                |> row None
+                                    [ spacing 40
+                                    , padding 40
+                                    , verticalCenter
+                                    , Attributes.minWidth <| px 240
+                                    ]
+                                |> el PickableCard
+                                    [ Attributes.alignLeft
+                                    , onClick <| ToggleIconSelection name
+                                    , vary Selected <| List.member name model.selectedIcons
+                                    , inlineStyle
+                                        [ ( "display"
+                                          , if String.contains model.search name then
+                                                "inline-block"
+                                            else
+                                                "none"
+                                          )
+                                        , ( "float", "none" )
+                                        ]
+                                    ]
+                        )
+                    |> Element.textLayout None
+                        [ spacing 20
+                        , padding 20
+                        , Attributes.alignRight
+                        , inlineStyle [ ( "text-align", "right" ) ]
+                        ]
+                    |> el None
+                        [ width <| percent 66
+                        , height <| fill 1
+                        , yScrollbar
+                        ]
+                , model.selectedIcons
+                    |> renderCode model.icons
+                    |> text
+                    |> el None
+                        [ padding 20
+                        , width <| percent 34
+                        , height <| fill 1
+                        , yScrollbar
+                        , inlineStyle
+                            [ ( "line-height", "1.36" )
+                            , ( "font-family", "\"Roboto Mono\", menlo, monospace" )
+                            , ( "font-size", "12px" )
+                            , ( "white-space", "pre" )
+                            ]
+                        ]
+                ]
+            ]
+
+
+svgFeatherIcon : String -> List (Svg msg) -> Html msg
+svgFeatherIcon className =
+    svg
+        [ SvgAttrs.class <| "feather feather-" ++ className
+        , SvgAttrs.fill "none"
+        , SvgAttrs.height "24"
+        , SvgAttrs.stroke "currentColor"
+        , SvgAttrs.strokeLinecap "round"
+        , SvgAttrs.strokeLinejoin "round"
+        , SvgAttrs.strokeWidth "2"
+        , SvgAttrs.viewBox "0 0 24 24"
+        , SvgAttrs.width "24"
+        ]
+
+
+makeName : String -> String
+makeName handle =
+    handle
+        |> replace All (regex "-.") (\{ match } -> match |> String.dropLeft 1 |> String.toUpper)
+
+
+makeFunction : List ( String, Html Msg, List Node ) -> String -> String
+makeFunction icons name =
+    icons
+        |> List.filter (\( n, _, _ ) -> n == name)
+        |> List.head
+        |> Maybe.map (\( n, _, x ) -> ( n, x ))
+        |> Maybe.withDefault ( "", [] )
+        |> (\( n, nodes ) ->
+                let
+                    name =
+                        makeName n
+                in
+                    name
+                        ++ " : Html msg\n"
+                        ++ name
+                        ++ " = \n    svgFeatherIcon \""
+                        ++ n
+                        ++ "\"\n"
+                        ++ "        [\n"
+                        ++ "        ]"
+           )
+
+
+renderCode : List ( String, Html Msg, List Node ) -> List String -> String
+renderCode icons selectedIcons =
+    (if List.isEmpty selectedIcons then
+        "module Icons"
+     else
+        "module Icons\n     exposing\n         ( "
+            ++ (selectedIcons |> List.map makeName |> String.join "\n         , ")
+            ++ "\n         )"
+    )
+        ++ codeHeader
+        ++ (selectedIcons |> List.map (makeFunction icons) |> String.join "\n\n\n")
+
+
+codeHeader : String
+codeHeader =
+    """
+
+import Svg exposing (Svg, svg)
+import Svg.Attributes exposing (..)
+
+
+svgFeatherIcon : String -> List (Svg msg) -> Html msg
+svgFeatherIcon className =
+    svg
+        [ class <| "feather feather-" ++ className
+        , fill "none"
+        , height "24"
+        , stroke "currentColor"
+        , strokeLinecap "round"
+        , strokeLinejoin "round"
+        , strokeWidth "2"
+        , viewBox "0 0 24 24"
+        , width "24"
+        ]
+
+"""

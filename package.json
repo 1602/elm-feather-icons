@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Feather icons for elm",
   "author": "Anatoliy Chakkaev",
-  "license": "BSD",
+  "license": "BSD3",
   "scripts": {
     "start": "elm-live src/Main.elm --output=elm.js --open",
     "deploy": "elm-make src/Main.elm --yes --output=dist/elm.js && uglifyjs dist/elm.js > dist/elm.min.js && gh-pages -d dist"
