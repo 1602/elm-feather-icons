@@ -161,7 +161,7 @@ view model =
                 ]
                 [ Icons.clipboard
                     |> Element.html
-                    |> el IconButton [ onClick CopyToClipboard, alignRight ]
+                    |> el IconButton [ Attributes.moveDown 2, onClick CopyToClipboard, alignRight ]
                     |> el None []
                     |> Element.above
                         [ if model.copied then
@@ -171,7 +171,7 @@ view model =
                         ]
                 , Icons.download
                     |> Element.html
-                    |> el IconButton [ onClick DownloadFile, alignRight ]
+                    |> el IconButton [ Attributes.moveDown 2, onClick DownloadFile, alignRight ]
                 ]
 
         search =

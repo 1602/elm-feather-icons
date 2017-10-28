@@ -98,7 +98,6 @@ stylesheet =
             , prop "width" "64px"
             , prop "height" "64px"
             , prop "overflow" "hidden"
-            , prop "zoom" "90%"
             , Color.text Color.darkGrey
             , Style.hover
                 [ prop "background-color" "rgba(158,158,158,.2)"
