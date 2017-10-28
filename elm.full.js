@@ -30588,6 +30588,7 @@ var _user$project$Styles$elevation8 = A2(_mdgriffith$style_elements$Style$prop, 
 var _user$project$Styles$elevation2 = A2(_mdgriffith$style_elements$Style$prop, 'box-shadow', '0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)');
 var _user$project$Styles$monospaceFont = A2(_mdgriffith$style_elements$Style$prop, 'font-family', '\"Roboto Mono\", menlo, sans-serif');
 var _user$project$Styles$fancyBlue = A4(_elm_lang$core$Color$rgba, 17, 123, 206, 0.3);
+var _user$project$Styles$Tooltip = {ctor: 'Tooltip'};
 var _user$project$Styles$IconButton = {ctor: 'IconButton'};
 var _user$project$Styles$SearchInput = {ctor: 'SearchInput'};
 var _user$project$Styles$PickableCard = {ctor: 'PickableCard'};
@@ -30842,7 +30843,63 @@ var _user$project$Styles$stylesheet = A2(
 								}
 							}
 						}),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_mdgriffith$style_elements$Style$style,
+							_user$project$Styles$Tooltip,
+							{
+								ctor: '::',
+								_0: A2(_mdgriffith$style_elements$Style$prop, 'transform-origin', 'top center'),
+								_1: {
+									ctor: '::',
+									_0: A2(_mdgriffith$style_elements$Style$prop, 'z-index', '999'),
+									_1: {
+										ctor: '::',
+										_0: _mdgriffith$style_elements$Style_Color$background(
+											A4(_elm_lang$core$Color$rgba, 97, 97, 97, 0.9)),
+										_1: {
+											ctor: '::',
+											_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$white),
+											_1: {
+												ctor: '::',
+												_0: _mdgriffith$style_elements$Style_Border$rounded(2),
+												_1: {
+													ctor: '::',
+													_0: _mdgriffith$style_elements$Style_Font$size(10),
+													_1: {
+														ctor: '::',
+														_0: _mdgriffith$style_elements$Style_Font$weight(500),
+														_1: {
+															ctor: '::',
+															_0: A2(_mdgriffith$style_elements$Style$prop, 'line-height', '14px'),
+															_1: {
+																ctor: '::',
+																_0: _user$project$Styles$monospaceFont,
+																_1: {
+																	ctor: '::',
+																	_0: A2(_mdgriffith$style_elements$Style$prop, 'max-width', '170px'),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(_mdgriffith$style_elements$Style$prop, 'padding', '8px'),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(_mdgriffith$style_elements$Style$prop, 'text-align', 'center'),
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		}
@@ -31046,8 +31103,9 @@ var _user$project$Main$svgFeatherIcon = function (className) {
 		});
 };
 var _user$project$Main$blankModel = {
-	icons: {ctor: '[]'},
 	search: '',
+	copied: false,
+	icons: {ctor: '[]'},
 	selectedIcons: {ctor: '[]'}
 };
 var _user$project$Main$saveSelectedIcons = _elm_lang$core$Native_Platform.outgoingPort(
@@ -31068,93 +31126,39 @@ var _user$project$Main$downloadFile = _elm_lang$core$Native_Platform.outgoingPor
 	function (v) {
 		return v;
 	});
-var _user$project$Main$update = F2(
-	function (msg, model) {
-		var _p13 = msg;
-		switch (_p13.ctor) {
-			case 'Search':
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{search: _p13._0}),
-					{ctor: '[]'});
-			case 'ToggleIconSelection':
-				var _p14 = _p13._0;
-				var selectedIcons = A2(_elm_lang$core$List$member, _p14, model.selectedIcons) ? A2(
-					_elm_lang$core$List$filter,
-					F2(
-						function (x, y) {
-							return !_elm_lang$core$Native_Utils.eq(x, y);
-						})(_p14),
-					model.selectedIcons) : _elm_lang$core$List$sort(
-					{ctor: '::', _0: _p14, _1: model.selectedIcons});
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{selectedIcons: selectedIcons}),
-					{
-						ctor: '::',
-						_0: _user$project$Main$saveSelectedIcons(selectedIcons),
-						_1: {ctor: '[]'}
-					});
-			case 'CopyToClipboard':
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					model,
-					{
-						ctor: '::',
-						_0: _user$project$Main$copyToClipboard(
-							A2(_user$project$Main$renderCode, model.icons, model.selectedIcons)),
-						_1: {ctor: '[]'}
-					});
-			default:
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					model,
-					{
-						ctor: '::',
-						_0: _user$project$Main$downloadFile(
-							A2(_user$project$Main$renderCode, model.icons, model.selectedIcons)),
-						_1: {ctor: '[]'}
-					});
-		}
-	});
-var _user$project$Main$Model = F3(
-	function (a, b, c) {
-		return {icons: a, search: b, selectedIcons: c};
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {search: a, copied: b, icons: c, selectedIcons: d};
 	});
 var _user$project$Main$init = function (data) {
-	var decoder = A4(
-		_elm_lang$core$Json_Decode$map3,
-		_user$project$Main$Model,
+	var decoder = A3(
+		_elm_lang$core$Json_Decode$map2,
+		A2(_user$project$Main$Model, '', false),
 		A2(
 			_elm_lang$core$Json_Decode$field,
 			'icons',
 			A2(
 				_elm_lang$core$Json_Decode$map,
-				function (_p15) {
+				function (_p13) {
 					return A2(
 						_elm_lang$core$List$map,
-						function (_p16) {
-							var _p17 = _p16;
-							var _p18 = _p17._0;
-							var nodes = _jinjor$elm_html_parser$HtmlParser$parse(_p17._1);
+						function (_p14) {
+							var _p15 = _p14;
+							var _p16 = _p15._0;
+							var nodes = _jinjor$elm_html_parser$HtmlParser$parse(_p15._1);
 							return {
 								ctor: '_Tuple3',
-								_0: _p18,
+								_0: _p16,
 								_1: A2(
 									_user$project$Main$svgFeatherIcon,
-									_p18,
+									_p16,
 									_jinjor$elm_html_parser$HtmlParser_Util$toVirtualDomSvg(nodes)),
 								_2: nodes
 							};
 						},
-						_elm_lang$core$List$reverse(_p15));
+						_elm_lang$core$List$reverse(_p13));
 				},
 				_elm_lang$core$Json_Decode$keyValuePairs(_elm_lang$core$Json_Decode$string))),
-		A2(_elm_lang$core$Json_Decode$field, 'search', _elm_lang$core$Json_Decode$string),
 		A2(
 			_elm_lang$core$Json_Decode$field,
 			'selectedIcons',
@@ -31169,6 +31173,78 @@ var _user$project$Main$init = function (data) {
 		{ctor: '[]'});
 };
 var _user$project$Main$DownloadFile = {ctor: 'DownloadFile'};
+var _user$project$Main$Copied = {ctor: 'Copied'};
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p17 = msg;
+		switch (_p17.ctor) {
+			case 'Search':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{search: _p17._0}),
+					{ctor: '[]'});
+			case 'ToggleIconSelection':
+				var _p18 = _p17._0;
+				var selectedIcons = A2(_elm_lang$core$List$member, _p18, model.selectedIcons) ? A2(
+					_elm_lang$core$List$filter,
+					F2(
+						function (x, y) {
+							return !_elm_lang$core$Native_Utils.eq(x, y);
+						})(_p18),
+					model.selectedIcons) : _elm_lang$core$List$sort(
+					{ctor: '::', _0: _p18, _1: model.selectedIcons});
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{selectedIcons: selectedIcons}),
+					{
+						ctor: '::',
+						_0: _user$project$Main$saveSelectedIcons(selectedIcons),
+						_1: {ctor: '[]'}
+					});
+			case 'CopyToClipboard':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{copied: true}),
+					{
+						ctor: '::',
+						_0: _user$project$Main$copyToClipboard(
+							A2(_user$project$Main$renderCode, model.icons, model.selectedIcons)),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$core$Task$perform,
+								function (_p19) {
+									return _user$project$Main$Copied;
+								},
+								_elm_lang$core$Process$sleep(500)),
+							_1: {ctor: '[]'}
+						}
+					});
+			case 'Copied':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{copied: false}),
+					{ctor: '[]'});
+			default:
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{
+						ctor: '::',
+						_0: _user$project$Main$downloadFile(
+							A2(_user$project$Main$renderCode, model.icons, model.selectedIcons)),
+						_1: {ctor: '[]'}
+					});
+		}
+	});
 var _user$project$Main$CopyToClipboard = {ctor: 'CopyToClipboard'};
 var _user$project$Main$ToggleIconSelection = function (a) {
 	return {ctor: 'ToggleIconSelection', _0: a};
@@ -31201,7 +31277,11 @@ var _user$project$Main$view = function (model) {
 									_1: {
 										ctor: '::',
 										_0: {ctor: '_Tuple2', _0: 'white-space', _1: 'pre'},
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'color', _1: 'grey'},
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							}
@@ -31214,9 +31294,9 @@ var _user$project$Main$view = function (model) {
 			A2(_user$project$Main$renderCode, model.icons, model.selectedIcons)));
 	var icons = A2(
 		_elm_lang$core$List$map,
-		function (_p19) {
-			var _p20 = _p19;
-			var _p21 = _p20._0;
+		function (_p20) {
+			var _p21 = _p20;
+			var _p22 = _p21._0;
 			return A3(
 				_mdgriffith$style_elements$Element$el,
 				_user$project$Styles$PickableCard,
@@ -31226,13 +31306,13 @@ var _user$project$Main$view = function (model) {
 					_1: {
 						ctor: '::',
 						_0: _mdgriffith$style_elements$Element_Events$onClick(
-							_user$project$Main$ToggleIconSelection(_p21)),
+							_user$project$Main$ToggleIconSelection(_p22)),
 						_1: {
 							ctor: '::',
 							_0: A2(
 								_mdgriffith$style_elements$Element_Attributes$vary,
 								_user$project$Styles$Selected,
-								A2(_elm_lang$core$List$member, _p21, model.selectedIcons)),
+								A2(_elm_lang$core$List$member, _p22, model.selectedIcons)),
 							_1: {
 								ctor: '::',
 								_0: _mdgriffith$style_elements$Element_Attributes$inlineStyle(
@@ -31241,12 +31321,20 @@ var _user$project$Main$view = function (model) {
 										_0: {
 											ctor: '_Tuple2',
 											_0: 'display',
-											_1: A2(_elm_lang$core$String$contains, model.search, _p21) ? 'inline-block' : 'none'
+											_1: A2(_elm_lang$core$String$contains, model.search, _p22) ? 'inline-block' : 'none'
 										},
 										_1: {
 											ctor: '::',
 											_0: {ctor: '_Tuple2', _0: 'float', _1: 'none'},
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'padding', _1: '0 15px'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'color', _1: 'dimgrey'},
+													_1: {ctor: '[]'}
+												}
+											}
 										}
 									}),
 								_1: {ctor: '[]'}
@@ -31282,10 +31370,10 @@ var _user$project$Main$view = function (model) {
 					},
 					{
 						ctor: '::',
-						_0: _mdgriffith$style_elements$Element$html(_p20._1),
+						_0: _mdgriffith$style_elements$Element$html(_p21._1),
 						_1: {
 							ctor: '::',
-							_0: _mdgriffith$style_elements$Element$text(_p21),
+							_0: _mdgriffith$style_elements$Element$text(_p22),
 							_1: {ctor: '[]'}
 						}
 					}));
@@ -31297,7 +31385,7 @@ var _user$project$Main$view = function (model) {
 		{
 			ctor: '::',
 			_0: _mdgriffith$style_elements$Element_Attributes$width(
-				_mdgriffith$style_elements$Element_Attributes$px(245)),
+				_mdgriffith$style_elements$Element_Attributes$px(275)),
 			_1: {
 				ctor: '::',
 				_0: _mdgriffith$style_elements$Element_Attributes$padding(10),
@@ -31366,19 +31454,34 @@ var _user$project$Main$view = function (model) {
 		},
 		{
 			ctor: '::',
-			_0: A3(
-				_mdgriffith$style_elements$Element$el,
-				_user$project$Styles$IconButton,
+			_0: A2(
+				_mdgriffith$style_elements$Element$above,
 				{
 					ctor: '::',
-					_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Main$CopyToClipboard),
-					_1: {
-						ctor: '::',
-						_0: _mdgriffith$style_elements$Element_Attributes$alignRight,
-						_1: {ctor: '[]'}
-					}
+					_0: model.copied ? A3(
+						_mdgriffith$style_elements$Element$el,
+						_user$project$Styles$Tooltip,
+						{ctor: '[]'},
+						_mdgriffith$style_elements$Element$text('Copied!')) : _mdgriffith$style_elements$Element$empty,
+					_1: {ctor: '[]'}
 				},
-				_mdgriffith$style_elements$Element$html(_user$project$Icons$clipboard)),
+				A3(
+					_mdgriffith$style_elements$Element$el,
+					_user$project$Styles$None,
+					{ctor: '[]'},
+					A3(
+						_mdgriffith$style_elements$Element$el,
+						_user$project$Styles$IconButton,
+						{
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Main$CopyToClipboard),
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Element_Attributes$alignRight,
+								_1: {ctor: '[]'}
+							}
+						},
+						_mdgriffith$style_elements$Element$html(_user$project$Icons$clipboard)))),
 			_1: {
 				ctor: '::',
 				_0: A3(
@@ -31532,7 +31635,7 @@ var _user$project$Main$main = _elm_lang$html$Html$programWithFlags(
 		init: _user$project$Main$init,
 		view: _user$project$Main$view,
 		update: _user$project$Main$update,
-		subscriptions: function (_p22) {
+		subscriptions: function (_p23) {
 			return _elm_lang$core$Platform_Sub$none;
 		}
 	})(_elm_lang$core$Json_Decode$value);
