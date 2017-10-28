@@ -1,4 +1,4 @@
-module Styles exposing (stylesheet, Styles(None, PickableCard, SearchInput), Variations(Selected, Hidden))
+module Styles exposing (stylesheet, Styles(None, PickableCard, SearchInput, IconButton), Variations(Selected, Hidden))
 
 import Style exposing (Property, style, StyleSheet, prop, hover)
 import Color
@@ -11,11 +11,13 @@ type Styles
     = None
     | PickableCard
     | SearchInput
+    | IconButton
 
 
 type Variations
     = Selected
     | Hidden
+    | Disabled
 
 
 fancyBlue : Color.Color
@@ -67,5 +69,38 @@ stylesheet =
             , Border.solid
             , Color.border <| Color.rgba 0 0 0 0.2
             , monospaceFont
+            , Border.rounded 2
+            ]
+        , style IconButton
+            [ Border.all 0
+            , Font.typeface [ "Roboto", "Helvetica", "Arial", "sans-serif" ]
+            , Font.weight 500
+            , Font.center
+            , Font.uppercase
+            , Border.rounded 2
+            , Font.size 14
+            , prop "line-height" "78px"
+            , prop "cursor" "pointer"
+            , prop "outline" "none"
+            , prop "border-radius" "50%"
+            , prop "width" "64px"
+            , prop "height" "64px"
+            , prop "overflow" "hidden"
+            , prop "zoom" "90%"
+            , Color.text Color.darkGrey
+            , Style.hover
+                [ prop "background-color" "rgba(158,158,158,.2)"
+                , Style.variation Disabled
+                    [ prop "background-color" "rgba(0,0,0,0)"
+                    ]
+                ]
+            , Style.pseudo "active"
+                [ prop "background-color" "rgba(158,158,158,.4)"
+                ]
+            , Style.variation Disabled
+                [ prop "background-color" "rgba(0,0,0,0)"
+                , prop "color" "rgba(0,0,0,.26)"
+                , prop "cursor" "default"
+                ]
             ]
         ]

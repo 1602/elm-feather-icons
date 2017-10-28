@@ -12,6 +12,7 @@ import Element.Attributes as Attributes
     exposing
         ( verticalCenter
         , center
+        , alignRight
         , vary
         , inlineStyle
         , spacing
@@ -25,7 +26,8 @@ import Element.Attributes as Attributes
         , percent
         )
 import Element exposing (Element, el, row, text, column, empty)
-import Styles exposing (Styles(None, PickableCard, SearchInput), Variations(Selected, Hidden), stylesheet)
+import Styles exposing (Styles(None, PickableCard, SearchInput, IconButton), Variations(Selected, Hidden), stylesheet)
+import Icons
 
 
 main : Program Value Model Msg
@@ -41,6 +43,8 @@ main =
 type Msg
     = Search String
     | ToggleIconSelection String
+    | CopyToClipboard
+    | DownloadFile
 
 
 type alias Model =
@@ -96,6 +100,12 @@ init data =
 port saveSelectedIcons : List String -> Cmd msg
 
 
+port copyToClipboard : String -> Cmd msg
+
+
+port downloadFile : String -> Cmd msg
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -111,6 +121,12 @@ update msg model =
                         (name :: model.selectedIcons) |> List.sort
             in
                 { model | selectedIcons = selectedIcons } ! [ saveSelectedIcons selectedIcons ]
+
+        CopyToClipboard ->
+            model ! [ renderCode model.icons model.selectedIcons |> copyToClipboard ]
+
+        DownloadFile ->
+            model ! [ renderCode model.icons model.selectedIcons |> downloadFile ]
 
 
 type alias View =
