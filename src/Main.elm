@@ -135,77 +135,106 @@ type alias View =
 
 view : Model -> Html Msg
 view model =
-    Element.viewport stylesheet <|
-        column None
-            [ height <| fill 1
-            , width <| fill 1
-            ]
+    let
+        sourceControls =
+            row None
+                [ spacing 20
+                , padding 30
+                ]
+                [ Icons.clipboard
+                    |> Element.html
+                    |> el IconButton [ onClick CopyToClipboard, alignRight ]
+                , Icons.download
+                    |> Element.html
+                    |> el IconButton [ onClick DownloadFile, alignRight ]
+                ]
+
+        search =
             [ model.search
-                |> Element.inputText SearchInput
+                |> Element.inputText None
                     [ onInput Search
                     , Attributes.placeholder "Search icon"
-                    , width <| px 400
+                    , inlineStyle [ ( "outline", "none" ) ]
+                    , width <| fill 1
+                    ]
+            , Icons.search
+                |> Element.html
+                |> el None [ inlineStyle [ ( "color", "lightgrey" ) ] ]
+            ]
+                |> row SearchInput
+                    [ width <| px 245
                     , padding 10
                     ]
-                |> el None [ padding 50 ]
-            , row None
-                [ height <| fill 1 ]
-                [ model.icons
-                    |> List.map
-                        (\( name, icon, _ ) ->
-                            [ icon
-                                |> Element.html
-                            , text name
-                            ]
-                                |> row None
-                                    [ spacing 40
-                                    , padding 40
-                                    , verticalCenter
-                                    , Attributes.minWidth <| px 240
+
+        icons =
+            model.icons
+                |> List.map
+                    (\( name, icon, _ ) ->
+                        [ icon
+                            |> Element.html
+                        , text name
+                        ]
+                            |> row None
+                                [ spacing 20
+                                , padding 20
+                                , verticalCenter
+                                , Attributes.minWidth <| px 240
+                                , Attributes.minHeight <| px 80
+                                ]
+                            |> el PickableCard
+                                [ Attributes.alignLeft
+                                , onClick <| ToggleIconSelection name
+                                , vary Selected <| List.member name model.selectedIcons
+                                , inlineStyle
+                                    [ ( "display"
+                                      , if String.contains model.search name then
+                                            "inline-block"
+                                        else
+                                            "none"
+                                      )
+                                    , ( "float", "none" )
                                     ]
-                                |> el PickableCard
-                                    [ Attributes.alignLeft
-                                    , onClick <| ToggleIconSelection name
-                                    , vary Selected <| List.member name model.selectedIcons
-                                    , inlineStyle
-                                        [ ( "display"
-                                          , if String.contains model.search name then
-                                                "inline-block"
-                                            else
-                                                "none"
-                                          )
-                                        , ( "float", "none" )
-                                        ]
-                                    ]
-                        )
+                                ]
+                    )
+
+        source =
+            model.selectedIcons
+                |> renderCode model.icons
+                |> text
+                |> el None
+                    [ padding 20
+                    , yScrollbar
+                    , inlineStyle
+                        [ ( "line-height", "1.36" )
+                        , ( "font-family", "\"Roboto Mono\", menlo, monospace" )
+                        , ( "font-size", "12px" )
+                        , ( "white-space", "pre" )
+                        ]
+                    ]
+    in
+        Element.viewport stylesheet <|
+            row None
+                [ height <| fill 1, width <| fill 1 ]
+                [ (row None [ width <| fill 1, alignRight, padding 20 ] [ search ])
+                    :: icons
                     |> Element.textLayout None
                         [ spacing 20
                         , padding 20
-                        , Attributes.alignRight
+                        , alignRight
                         , inlineStyle [ ( "text-align", "right" ) ]
+                        , yScrollbar
+                        , height <| fill 1
                         ]
                     |> el None
-                        [ width <| percent 66
-                        , height <| fill 1
-                        , yScrollbar
+                        [ height <| fill 1
+                        , width <| percent 66
                         ]
-                , model.selectedIcons
-                    |> renderCode model.icons
-                    |> text
-                    |> el None
-                        [ padding 20
-                        , width <| percent 34
-                        , height <| fill 1
-                        , yScrollbar
-                        , inlineStyle
-                            [ ( "line-height", "1.36" )
-                            , ( "font-family", "\"Roboto Mono\", menlo, monospace" )
-                            , ( "font-size", "12px" )
-                            , ( "white-space", "pre" )
-                            ]
-                        ]
+                , column None
+                    [ width <| percent 34
+                    , height <| fill 1
+                    ]
+                    [ sourceControls |> el None [ alignRight ], source ]
                 ]
-            ]
 
 
 svgFeatherIcon : String -> List (Svg msg) -> Html msg
