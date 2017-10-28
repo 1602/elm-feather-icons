@@ -187,7 +187,7 @@ view model =
                 |> el None [ inlineStyle [ ( "color", "lightgrey" ) ] ]
             ]
                 |> row SearchInput
-                    [ width <| px 245
+                    [ width <| px 275
                     , padding 10
                     ]
 
@@ -218,6 +218,8 @@ view model =
                                             "none"
                                       )
                                     , ( "float", "none" )
+                                    , ( "padding", "0 15px" )
+                                    , ( "color", "dimgrey" )
                                     ]
                                 ]
                     )
@@ -234,6 +236,7 @@ view model =
                         , ( "font-family", "\"Roboto Mono\", menlo, monospace" )
                         , ( "font-size", "12px" )
                         , ( "white-space", "pre" )
+                        , ( "color", "grey" )
                         ]
                     ]
     in
