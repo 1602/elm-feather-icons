@@ -30772,39 +30772,13 @@ var _user$project$Styles$stylesheet = A2(
 																				_0: A2(_mdgriffith$style_elements$Style$prop, 'overflow', 'hidden'),
 																				_1: {
 																					ctor: '::',
-																					_0: A2(_mdgriffith$style_elements$Style$prop, 'zoom', '90%'),
+																					_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$darkGrey),
 																					_1: {
 																						ctor: '::',
-																						_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$darkGrey),
-																						_1: {
-																							ctor: '::',
-																							_0: _mdgriffith$style_elements$Style$hover(
-																								{
-																									ctor: '::',
-																									_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(158,158,158,.2)'),
-																									_1: {
-																										ctor: '::',
-																										_0: A2(
-																											_mdgriffith$style_elements$Style$variation,
-																											_user$project$Styles$Disabled,
-																											{
-																												ctor: '::',
-																												_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(0,0,0,0)'),
-																												_1: {ctor: '[]'}
-																											}),
-																										_1: {ctor: '[]'}
-																									}
-																								}),
-																							_1: {
+																						_0: _mdgriffith$style_elements$Style$hover(
+																							{
 																								ctor: '::',
-																								_0: A2(
-																									_mdgriffith$style_elements$Style$pseudo,
-																									'active',
-																									{
-																										ctor: '::',
-																										_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(158,158,158,.4)'),
-																										_1: {ctor: '[]'}
-																									}),
+																								_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(158,158,158,.2)'),
 																								_1: {
 																									ctor: '::',
 																									_0: A2(
@@ -30813,18 +30787,40 @@ var _user$project$Styles$stylesheet = A2(
 																										{
 																											ctor: '::',
 																											_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(0,0,0,0)'),
-																											_1: {
-																												ctor: '::',
-																												_0: A2(_mdgriffith$style_elements$Style$prop, 'color', 'rgba(0,0,0,.26)'),
-																												_1: {
-																													ctor: '::',
-																													_0: A2(_mdgriffith$style_elements$Style$prop, 'cursor', 'default'),
-																													_1: {ctor: '[]'}
-																												}
-																											}
+																											_1: {ctor: '[]'}
 																										}),
 																									_1: {ctor: '[]'}
 																								}
+																							}),
+																						_1: {
+																							ctor: '::',
+																							_0: A2(
+																								_mdgriffith$style_elements$Style$pseudo,
+																								'active',
+																								{
+																									ctor: '::',
+																									_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(158,158,158,.4)'),
+																									_1: {ctor: '[]'}
+																								}),
+																							_1: {
+																								ctor: '::',
+																								_0: A2(
+																									_mdgriffith$style_elements$Style$variation,
+																									_user$project$Styles$Disabled,
+																									{
+																										ctor: '::',
+																										_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(0,0,0,0)'),
+																										_1: {
+																											ctor: '::',
+																											_0: A2(_mdgriffith$style_elements$Style$prop, 'color', 'rgba(0,0,0,.26)'),
+																											_1: {
+																												ctor: '::',
+																												_0: A2(_mdgriffith$style_elements$Style$prop, 'cursor', 'default'),
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}),
+																								_1: {ctor: '[]'}
 																							}
 																						}
 																					}
@@ -31474,11 +31470,15 @@ var _user$project$Main$view = function (model) {
 						_user$project$Styles$IconButton,
 						{
 							ctor: '::',
-							_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Main$CopyToClipboard),
+							_0: _mdgriffith$style_elements$Element_Attributes$moveDown(2),
 							_1: {
 								ctor: '::',
-								_0: _mdgriffith$style_elements$Element_Attributes$alignRight,
-								_1: {ctor: '[]'}
+								_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Main$CopyToClipboard),
+								_1: {
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Element_Attributes$alignRight,
+									_1: {ctor: '[]'}
+								}
 							}
 						},
 						_mdgriffith$style_elements$Element$html(_user$project$Icons$clipboard)))),
@@ -31489,11 +31489,15 @@ var _user$project$Main$view = function (model) {
 					_user$project$Styles$IconButton,
 					{
 						ctor: '::',
-						_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Main$DownloadFile),
+						_0: _mdgriffith$style_elements$Element_Attributes$moveDown(2),
 						_1: {
 							ctor: '::',
-							_0: _mdgriffith$style_elements$Element_Attributes$alignRight,
-							_1: {ctor: '[]'}
+							_0: _mdgriffith$style_elements$Element_Events$onClick(_user$project$Main$DownloadFile),
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Element_Attributes$alignRight,
+								_1: {ctor: '[]'}
+							}
 						}
 					},
 					_mdgriffith$style_elements$Element$html(_user$project$Icons$download)),
