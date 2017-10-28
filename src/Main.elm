@@ -1,7 +1,7 @@
 port module Main exposing (main)
 
 import Html exposing (Html)
-import HtmlParser exposing (Node(Element), parse)
+import HtmlParser exposing (Node(Element, Text), parse)
 import HtmlParser.Util exposing (toVirtualDomSvg)
 import Json.Decode as Decode exposing (Value, field, string)
 import Svg exposing (Svg, svg)
@@ -231,9 +231,53 @@ makeFunction icons name =
                         ++ " = \n    svgFeatherIcon \""
                         ++ n
                         ++ "\"\n"
-                        ++ "        [\n"
-                        ++ "        ]"
+                        ++ "        [ "
+                        ++ (nodes |> List.map printNode |> String.join ("\n        , "))
+                        ++ "\n        ]"
            )
+
+
+printNode : Node -> String
+printNode n =
+    case n of
+        Element name attrs children ->
+            printNodeName name ++ (printAttrs attrs) ++ (printChildren children)
+
+        Text s ->
+            s |> toString
+
+        _ ->
+            ""
+
+
+printNodeName : String -> String
+printNodeName name =
+    "Svg." ++ name
+
+
+printAttrs : List ( String, String ) -> String
+printAttrs attrs =
+    " [ "
+        ++ (attrs
+                |> List.map (\( name, val ) -> name ++ " " ++ (toString val))
+                |> String.join ", "
+           )
+        ++ " ]"
+
+
+printChildren : List Node -> String
+printChildren children =
+    case children of
+        [] ->
+            " []"
+
+        ch ->
+            " [ "
+                ++ (ch
+                        |> List.map printNode
+                        |> String.join ", "
+                   )
+                ++ " ]"
 
 
 renderCode : List ( String, Html Msg, List Node ) -> List String -> String
@@ -241,9 +285,9 @@ renderCode icons selectedIcons =
     (if List.isEmpty selectedIcons then
         "module Icons"
      else
-        "module Icons\n     exposing\n         ( "
-            ++ (selectedIcons |> List.map makeName |> String.join "\n         , ")
-            ++ "\n         )"
+        "module Icons\n    exposing\n        ( "
+            ++ (selectedIcons |> List.map makeName |> String.join "\n        , ")
+            ++ "\n        )"
     )
         ++ codeHeader
         ++ (selectedIcons |> List.map (makeFunction icons) |> String.join "\n\n\n")
@@ -253,6 +297,7 @@ codeHeader : String
 codeHeader =
     """
 
+import Html exposing (Html)
 import Svg exposing (Svg, svg)
 import Svg.Attributes exposing (..)
 
