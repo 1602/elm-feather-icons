@@ -216,7 +216,7 @@ view model =
 
                 Just n ->
                     if List.member n model.selectedIcons then
-                        Icons.slash
+                        Icons.trash2
                     else
                         Icons.crosshair
               )
