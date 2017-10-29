@@ -5,10 +5,11 @@ module Styles
             ( None
             , PickableCard
             , SearchInput
+            , SearchInputText
             , IconButton
             , Tooltip
             )
-        , Variations(Selected, Hidden)
+        , Variations(Selected, Hidden, Focused)
         )
 
 import Style exposing (Property, style, StyleSheet, prop, hover)
@@ -22,6 +23,7 @@ type Styles
     = None
     | PickableCard
     | SearchInput
+    | SearchInputText
     | IconButton
     | Tooltip
 
@@ -30,6 +32,7 @@ type Variations
     = Selected
     | Hidden
     | Disabled
+    | Focused
 
 
 fancyBlue : Color.Color
@@ -44,7 +47,7 @@ monospaceFont =
 
 elevation2 : Property s v
 elevation2 =
-    prop "box-shadow" "0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)"
+    prop "box-shadow" "0 2px 2px 0 rgba(0,0,0,.04), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)"
 
 
 elevation8 : Property s v
@@ -63,6 +66,7 @@ stylesheet =
             , Font.size 12
             , Color.background <| Color.rgba 0 0 0 0.03
             , Color.border Color.white
+            , prop "color" "dimgrey"
             , Border.all 3
             , Border.solid
             , Border.rounded 2
@@ -73,15 +77,29 @@ stylesheet =
                 [ prop "display" "none"
                 ]
             , Style.variation Selected
-                [ Color.border <| Color.grey
+                [ Color.border <| Color.rgb 100 149 237
+                , Color.text <| Color.rgb 72 120 206
                 ]
             ]
         , style SearchInput
-            [ Border.all 1
+            [ Border.all 3
             , Border.solid
             , Color.border <| Color.rgba 0 0 0 0.2
             , monospaceFont
             , Border.rounded 2
+            , Color.text <| Color.rgb 180 180 180
+            , Style.variation Focused
+                [ Color.border <| Color.rgb 166 178 228
+                , Color.text <| Color.rgb 166 178 228
+                ]
+            ]
+        , style SearchInputText
+            [ prop "outline" "none"
+            , Color.text <| Color.rgb 180 180 180
+            , monospaceFont
+            , Style.pseudo "focus"
+                [ Color.text <| Color.rgb 72 120 206
+                ]
             ]
         , style IconButton
             [ Border.all 0

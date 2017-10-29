@@ -8,7 +8,7 @@ import HtmlParser.Util exposing (toVirtualDomSvg)
 import Json.Decode as Decode exposing (Value, field, string)
 import Svg exposing (Svg, svg)
 import Svg.Attributes as SvgAttrs
-import Element.Events exposing (onClick, onInput)
+import Element.Events exposing (onClick, onInput, onFocus, onBlur, onSubmit)
 import Regex exposing (regex, replace, HowMany(All))
 import Element.Attributes as Attributes
     exposing
@@ -34,10 +34,11 @@ import Styles
             ( None
             , PickableCard
             , SearchInput
+            , SearchInputText
             , IconButton
             , Tooltip
             )
-        , Variations(Selected, Hidden)
+        , Variations(Selected, Hidden, Focused)
         , stylesheet
         )
 import Icons
@@ -54,16 +55,19 @@ main =
 
 
 type Msg
-    = Search String
+    = NoOp
+    | Search String
     | ToggleIconSelection String
     | CopyToClipboard
     | Copied
+    | SetFocused Bool
     | DownloadFile
 
 
 type alias Model =
     { search : String
     , copied : Bool
+    , focused : Bool
     , icons : List ( String, Html Msg, List Node )
     , selectedIcons : List String
     }
@@ -73,6 +77,7 @@ blankModel : Model
 blankModel =
     { search = ""
     , copied = False
+    , focused = False
     , icons = []
     , selectedIcons = []
     }
@@ -82,7 +87,7 @@ init : Value -> ( Model, Cmd Msg )
 init data =
     let
         decoder =
-            Decode.map2 (Model "" False)
+            Decode.map2 (Model "" False False)
                 (field "icons" <|
                     Decode.map
                         (List.reverse
@@ -124,6 +129,9 @@ port downloadFile : String -> Cmd msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        NoOp ->
+            model ! []
+
         Search s ->
             { model | search = s } ! []
 
@@ -145,6 +153,9 @@ update msg model =
 
         DownloadFile ->
             model ! [ renderCode model.icons model.selectedIcons |> downloadFile ]
+
+        SetFocused f ->
+            { model | focused = f } ! []
 
 
 type alias View =
@@ -174,22 +185,58 @@ view model =
                     |> el IconButton [ Attributes.moveDown 2, onClick DownloadFile, alignRight ]
                 ]
 
+        onTarget =
+            model.icons
+                |> List.filterMap
+                    (\( name, _, _ ) ->
+                        if String.contains model.search name then
+                            Just name
+                        else
+                            Nothing
+                    )
+                |> \list ->
+                    case list of
+                        [ x ] ->
+                            Just x
+
+                        _ ->
+                            Nothing
+
         search =
             [ model.search
-                |> Element.inputText None
+                |> Element.inputText SearchInputText
                     [ onInput Search
+                    , onFocus <| SetFocused True
+                    , onBlur <| SetFocused False
                     , Attributes.placeholder "Search icon"
-                    , inlineStyle [ ( "outline", "none" ) ]
                     , width <| fill 1
                     ]
-            , Icons.search
+            , (case onTarget of
+                Nothing ->
+                    Icons.search
+
+                Just n ->
+                    if List.member n model.selectedIcons then
+                        Icons.slash
+                    else
+                        Icons.crosshair
+              )
                 |> Element.html
-                |> el None [ inlineStyle [ ( "color", "lightgrey" ) ] ]
+                |> el None []
             ]
                 |> row SearchInput
                     [ width <| px 275
                     , padding 10
+                    , vary Focused model.focused
+                    , onSubmit <|
+                        case onTarget of
+                            Nothing ->
+                                NoOp
+
+                            Just name ->
+                                ToggleIconSelection name
                     ]
+                |> Element.node "form"
 
         icons =
             model.icons
@@ -219,7 +266,6 @@ view model =
                                       )
                                     , ( "float", "none" )
                                     , ( "padding", "0 15px" )
-                                    , ( "color", "dimgrey" )
                                     ]
                                 ]
                     )
