@@ -6,4 +6,4 @@ Embeddable svg icons by https://feathericons.com/
 
 Generate elm code by selecting desired icons
 
-[![https://gyazo.com/cae5b77183b529a8fcc72abd18f862b2](https://i.gyazo.com/cae5b77183b529a8fcc72abd18f862b2.gif)](https://gyazo.com/cae5b77183b529a8fcc72abd18f862b2)
+[![https://gyazo.com/fa2022e0ff6fae010070e20f2e55f71b](https://i.gyazo.com/fa2022e0ff6fae010070e20f2e55f71b.gif)](https://gyazo.com/fa2022e0ff6fae010070e20f2e55f71b)
