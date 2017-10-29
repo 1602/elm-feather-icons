@@ -30637,50 +30637,76 @@ var _user$project$Icons$search = A2(
 			_1: {ctor: '[]'}
 		}
 	});
-var _user$project$Icons$slash = A2(
+var _user$project$Icons$trash2 = A2(
 	_user$project$Icons$svgFeatherIcon,
-	'slash',
+	'trash-2',
 	{
 		ctor: '::',
 		_0: A2(
-			_elm_lang$svg$Svg$circle,
+			_elm_lang$svg$Svg$polyline,
 			{
 				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$cx('12'),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$cy('12'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$r('10'),
-						_1: {ctor: '[]'}
-					}
-				}
+				_0: _elm_lang$svg$Svg_Attributes$points('3 6 5 6 21 6'),
+				_1: {ctor: '[]'}
 			},
 			{ctor: '[]'}),
 		_1: {
 			ctor: '::',
 			_0: A2(
-				_elm_lang$svg$Svg$line,
+				_elm_lang$svg$Svg$path,
 				{
 					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$x1('4.93'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$y1('4.93'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$x2('19.07'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$y2('19.07'),
-								_1: {ctor: '[]'}
-							}
-						}
-					}
+					_0: _elm_lang$svg$Svg_Attributes$d('M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'),
+					_1: {ctor: '[]'}
 				},
 				{ctor: '[]'}),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$svg$Svg$line,
+					{
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$x1('10'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$y1('11'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$x2('10'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$y2('17'),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$svg$Svg$line,
+						{
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$x1('14'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$y1('11'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$x2('14'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$y2('17'),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
+			}
 		}
 	});
 
@@ -31640,7 +31666,7 @@ var _user$project$Main$view = function (model) {
 								if (_p28.ctor === 'Nothing') {
 									return _user$project$Icons$search;
 								} else {
-									return A2(_elm_lang$core$List$member, _p28._0, model.selectedIcons) ? _user$project$Icons$slash : _user$project$Icons$crosshair;
+									return A2(_elm_lang$core$List$member, _p28._0, model.selectedIcons) ? _user$project$Icons$trash2 : _user$project$Icons$crosshair;
 								}
 							}())),
 					_1: {ctor: '[]'}
