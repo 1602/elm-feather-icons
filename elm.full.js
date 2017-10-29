@@ -30381,67 +30381,6 @@ var _user$project$Icons$svgFeatherIcon = function (className) {
 			}
 		});
 };
-var _user$project$Icons$alertTriangle = A2(
-	_user$project$Icons$svgFeatherIcon,
-	'alert-triangle',
-	{
-		ctor: '::',
-		_0: A2(
-			_elm_lang$svg$Svg$path,
-			{
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$d('M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'),
-				_1: {ctor: '[]'}
-			},
-			{ctor: '[]'}),
-		_1: {
-			ctor: '::',
-			_0: A2(
-				_elm_lang$svg$Svg$line,
-				{
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$x1('12'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$y1('9'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$x2('12'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$y2('13'),
-								_1: {ctor: '[]'}
-							}
-						}
-					}
-				},
-				{ctor: '[]'}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$svg$Svg$line,
-					{
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$x1('12'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$y1('17'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$x2('12'),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$y2('17'),
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					},
-					{ctor: '[]'}),
-				_1: {ctor: '[]'}
-			}
-		}
-	});
 var _user$project$Icons$clipboard = A2(
 	_user$project$Icons$svgFeatherIcon,
 	'clipboard',
@@ -30486,6 +30425,121 @@ var _user$project$Icons$clipboard = A2(
 				},
 				{ctor: '[]'}),
 			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Icons$crosshair = A2(
+	_user$project$Icons$svgFeatherIcon,
+	'crosshair',
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$svg$Svg$circle,
+			{
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$cx('12'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$cy('12'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$r('10'),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{ctor: '[]'}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$svg$Svg$line,
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$x1('22'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$y1('12'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$x2('18'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$y2('12'),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$svg$Svg$line,
+					{
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$x1('6'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$y1('12'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$x2('2'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$y2('12'),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$svg$Svg$line,
+						{
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$x1('12'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$y1('6'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$x2('12'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$y2('2'),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$svg$Svg$line,
+							{
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$x1('12'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$y1('22'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$x2('12'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$svg$Svg_Attributes$y2('18'),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
 		}
 	});
 var _user$project$Icons$download = A2(
@@ -30583,16 +30637,64 @@ var _user$project$Icons$search = A2(
 			_1: {ctor: '[]'}
 		}
 	});
+var _user$project$Icons$slash = A2(
+	_user$project$Icons$svgFeatherIcon,
+	'slash',
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$svg$Svg$circle,
+			{
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$cx('12'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$cy('12'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$r('10'),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{ctor: '[]'}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$svg$Svg$line,
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$x1('4.93'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$y1('4.93'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$x2('19.07'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$y2('19.07'),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				},
+				{ctor: '[]'}),
+			_1: {ctor: '[]'}
+		}
+	});
 
 var _user$project$Styles$elevation8 = A2(_mdgriffith$style_elements$Style$prop, 'box-shadow', '0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12), 0 5px 5px -3px rgba(0,0,0,.2)');
-var _user$project$Styles$elevation2 = A2(_mdgriffith$style_elements$Style$prop, 'box-shadow', '0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)');
+var _user$project$Styles$elevation2 = A2(_mdgriffith$style_elements$Style$prop, 'box-shadow', '0 2px 2px 0 rgba(0,0,0,.04), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)');
 var _user$project$Styles$monospaceFont = A2(_mdgriffith$style_elements$Style$prop, 'font-family', '\"Roboto Mono\", menlo, sans-serif');
 var _user$project$Styles$fancyBlue = A4(_elm_lang$core$Color$rgba, 17, 123, 206, 0.3);
 var _user$project$Styles$Tooltip = {ctor: 'Tooltip'};
 var _user$project$Styles$IconButton = {ctor: 'IconButton'};
+var _user$project$Styles$SearchInputText = {ctor: 'SearchInputText'};
 var _user$project$Styles$SearchInput = {ctor: 'SearchInput'};
 var _user$project$Styles$PickableCard = {ctor: 'PickableCard'};
 var _user$project$Styles$None = {ctor: 'None'};
+var _user$project$Styles$Focused = {ctor: 'Focused'};
 var _user$project$Styles$Disabled = {ctor: 'Disabled'};
 var _user$project$Styles$Hidden = {ctor: 'Hidden'};
 var _user$project$Styles$Selected = {ctor: 'Selected'};
@@ -30631,42 +30733,52 @@ var _user$project$Styles$stylesheet = A2(
 										_0: _mdgriffith$style_elements$Style_Color$border(_elm_lang$core$Color$white),
 										_1: {
 											ctor: '::',
-											_0: _mdgriffith$style_elements$Style_Border$all(3),
+											_0: A2(_mdgriffith$style_elements$Style$prop, 'color', 'dimgrey'),
 											_1: {
 												ctor: '::',
-												_0: _mdgriffith$style_elements$Style_Border$solid,
+												_0: _mdgriffith$style_elements$Style_Border$all(3),
 												_1: {
 													ctor: '::',
-													_0: _mdgriffith$style_elements$Style_Border$rounded(2),
+													_0: _mdgriffith$style_elements$Style_Border$solid,
 													_1: {
 														ctor: '::',
-														_0: _mdgriffith$style_elements$Style$hover(
-															{
-																ctor: '::',
-																_0: _user$project$Styles$elevation8,
-																_1: {ctor: '[]'}
-															}),
+														_0: _mdgriffith$style_elements$Style_Border$rounded(2),
 														_1: {
 															ctor: '::',
-															_0: A2(
-																_mdgriffith$style_elements$Style$variation,
-																_user$project$Styles$Hidden,
+															_0: _mdgriffith$style_elements$Style$hover(
 																{
 																	ctor: '::',
-																	_0: A2(_mdgriffith$style_elements$Style$prop, 'display', 'none'),
+																	_0: _user$project$Styles$elevation8,
 																	_1: {ctor: '[]'}
 																}),
 															_1: {
 																ctor: '::',
 																_0: A2(
 																	_mdgriffith$style_elements$Style$variation,
-																	_user$project$Styles$Selected,
+																	_user$project$Styles$Hidden,
 																	{
 																		ctor: '::',
-																		_0: _mdgriffith$style_elements$Style_Color$border(_elm_lang$core$Color$grey),
+																		_0: A2(_mdgriffith$style_elements$Style$prop, 'display', 'none'),
 																		_1: {ctor: '[]'}
 																	}),
-																_1: {ctor: '[]'}
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_mdgriffith$style_elements$Style$variation,
+																		_user$project$Styles$Selected,
+																		{
+																			ctor: '::',
+																			_0: _mdgriffith$style_elements$Style_Color$border(
+																				A3(_elm_lang$core$Color$rgb, 100, 149, 237)),
+																			_1: {
+																				ctor: '::',
+																				_0: _mdgriffith$style_elements$Style_Color$text(
+																					A3(_elm_lang$core$Color$rgb, 72, 120, 206)),
+																				_1: {ctor: '[]'}
+																			}
+																		}),
+																	_1: {ctor: '[]'}
+																}
 															}
 														}
 													}
@@ -30686,7 +30798,7 @@ var _user$project$Styles$stylesheet = A2(
 					_user$project$Styles$SearchInput,
 					{
 						ctor: '::',
-						_0: _mdgriffith$style_elements$Style_Border$all(1),
+						_0: _mdgriffith$style_elements$Style_Border$all(3),
 						_1: {
 							ctor: '::',
 							_0: _mdgriffith$style_elements$Style_Border$solid,
@@ -30700,7 +30812,29 @@ var _user$project$Styles$stylesheet = A2(
 									_1: {
 										ctor: '::',
 										_0: _mdgriffith$style_elements$Style_Border$rounded(2),
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: _mdgriffith$style_elements$Style_Color$text(
+												A3(_elm_lang$core$Color$rgb, 180, 180, 180)),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_mdgriffith$style_elements$Style$variation,
+													_user$project$Styles$Focused,
+													{
+														ctor: '::',
+														_0: _mdgriffith$style_elements$Style_Color$border(
+															A3(_elm_lang$core$Color$rgb, 166, 178, 228)),
+														_1: {
+															ctor: '::',
+															_0: _mdgriffith$style_elements$Style_Color$text(
+																A3(_elm_lang$core$Color$rgb, 166, 178, 228)),
+															_1: {ctor: '[]'}
+														}
+													}),
+												_1: {ctor: '[]'}
+											}
+										}
 									}
 								}
 							}
@@ -30710,75 +30844,129 @@ var _user$project$Styles$stylesheet = A2(
 					ctor: '::',
 					_0: A2(
 						_mdgriffith$style_elements$Style$style,
-						_user$project$Styles$IconButton,
+						_user$project$Styles$SearchInputText,
 						{
 							ctor: '::',
-							_0: _mdgriffith$style_elements$Style_Border$all(0),
+							_0: A2(_mdgriffith$style_elements$Style$prop, 'outline', 'none'),
 							_1: {
 								ctor: '::',
-								_0: _mdgriffith$style_elements$Style_Font$typeface(
-									{
-										ctor: '::',
-										_0: 'Roboto',
-										_1: {
-											ctor: '::',
-											_0: 'Helvetica',
-											_1: {
-												ctor: '::',
-												_0: 'Arial',
-												_1: {
-													ctor: '::',
-													_0: 'sans-serif',
-													_1: {ctor: '[]'}
-												}
-											}
-										}
-									}),
+								_0: _mdgriffith$style_elements$Style_Color$text(
+									A3(_elm_lang$core$Color$rgb, 180, 180, 180)),
 								_1: {
 									ctor: '::',
-									_0: _mdgriffith$style_elements$Style_Font$weight(500),
+									_0: _user$project$Styles$monospaceFont,
 									_1: {
 										ctor: '::',
-										_0: _mdgriffith$style_elements$Style_Font$center,
-										_1: {
+										_0: A2(
+											_mdgriffith$style_elements$Style$pseudo,
+											'focus',
+											{
+												ctor: '::',
+												_0: _mdgriffith$style_elements$Style_Color$text(
+													A3(_elm_lang$core$Color$rgb, 72, 120, 206)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_mdgriffith$style_elements$Style$style,
+							_user$project$Styles$IconButton,
+							{
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Style_Border$all(0),
+								_1: {
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Style_Font$typeface(
+										{
 											ctor: '::',
-											_0: _mdgriffith$style_elements$Style_Font$uppercase,
+											_0: 'Roboto',
 											_1: {
 												ctor: '::',
-												_0: _mdgriffith$style_elements$Style_Border$rounded(2),
+												_0: 'Helvetica',
 												_1: {
 													ctor: '::',
-													_0: _mdgriffith$style_elements$Style_Font$size(14),
+													_0: 'Arial',
 													_1: {
 														ctor: '::',
-														_0: A2(_mdgriffith$style_elements$Style$prop, 'line-height', '78px'),
+														_0: 'sans-serif',
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}),
+									_1: {
+										ctor: '::',
+										_0: _mdgriffith$style_elements$Style_Font$weight(500),
+										_1: {
+											ctor: '::',
+											_0: _mdgriffith$style_elements$Style_Font$center,
+											_1: {
+												ctor: '::',
+												_0: _mdgriffith$style_elements$Style_Font$uppercase,
+												_1: {
+													ctor: '::',
+													_0: _mdgriffith$style_elements$Style_Border$rounded(2),
+													_1: {
+														ctor: '::',
+														_0: _mdgriffith$style_elements$Style_Font$size(14),
 														_1: {
 															ctor: '::',
-															_0: A2(_mdgriffith$style_elements$Style$prop, 'cursor', 'pointer'),
+															_0: A2(_mdgriffith$style_elements$Style$prop, 'line-height', '78px'),
 															_1: {
 																ctor: '::',
-																_0: A2(_mdgriffith$style_elements$Style$prop, 'outline', 'none'),
+																_0: A2(_mdgriffith$style_elements$Style$prop, 'cursor', 'pointer'),
 																_1: {
 																	ctor: '::',
-																	_0: A2(_mdgriffith$style_elements$Style$prop, 'border-radius', '50%'),
+																	_0: A2(_mdgriffith$style_elements$Style$prop, 'outline', 'none'),
 																	_1: {
 																		ctor: '::',
-																		_0: A2(_mdgriffith$style_elements$Style$prop, 'width', '64px'),
+																		_0: A2(_mdgriffith$style_elements$Style$prop, 'border-radius', '50%'),
 																		_1: {
 																			ctor: '::',
-																			_0: A2(_mdgriffith$style_elements$Style$prop, 'height', '64px'),
+																			_0: A2(_mdgriffith$style_elements$Style$prop, 'width', '64px'),
 																			_1: {
 																				ctor: '::',
-																				_0: A2(_mdgriffith$style_elements$Style$prop, 'overflow', 'hidden'),
+																				_0: A2(_mdgriffith$style_elements$Style$prop, 'height', '64px'),
 																				_1: {
 																					ctor: '::',
-																					_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$darkGrey),
+																					_0: A2(_mdgriffith$style_elements$Style$prop, 'overflow', 'hidden'),
 																					_1: {
 																						ctor: '::',
-																						_0: _mdgriffith$style_elements$Style$hover(
-																							{
+																						_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$darkGrey),
+																						_1: {
+																							ctor: '::',
+																							_0: _mdgriffith$style_elements$Style$hover(
+																								{
+																									ctor: '::',
+																									_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(158,158,158,.2)'),
+																									_1: {
+																										ctor: '::',
+																										_0: A2(
+																											_mdgriffith$style_elements$Style$variation,
+																											_user$project$Styles$Disabled,
+																											{
+																												ctor: '::',
+																												_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(0,0,0,0)'),
+																												_1: {ctor: '[]'}
+																											}),
+																										_1: {ctor: '[]'}
+																									}
+																								}),
+																							_1: {
 																								ctor: '::',
-																								_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(158,158,158,.2)'),
+																								_0: A2(
+																									_mdgriffith$style_elements$Style$pseudo,
+																									'active',
+																									{
+																										ctor: '::',
+																										_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(158,158,158,.4)'),
+																										_1: {ctor: '[]'}
+																									}),
 																								_1: {
 																									ctor: '::',
 																									_0: A2(
@@ -30787,40 +30975,18 @@ var _user$project$Styles$stylesheet = A2(
 																										{
 																											ctor: '::',
 																											_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(0,0,0,0)'),
-																											_1: {ctor: '[]'}
+																											_1: {
+																												ctor: '::',
+																												_0: A2(_mdgriffith$style_elements$Style$prop, 'color', 'rgba(0,0,0,.26)'),
+																												_1: {
+																													ctor: '::',
+																													_0: A2(_mdgriffith$style_elements$Style$prop, 'cursor', 'default'),
+																													_1: {ctor: '[]'}
+																												}
+																											}
 																										}),
 																									_1: {ctor: '[]'}
 																								}
-																							}),
-																						_1: {
-																							ctor: '::',
-																							_0: A2(
-																								_mdgriffith$style_elements$Style$pseudo,
-																								'active',
-																								{
-																									ctor: '::',
-																									_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(158,158,158,.4)'),
-																									_1: {ctor: '[]'}
-																								}),
-																							_1: {
-																								ctor: '::',
-																								_0: A2(
-																									_mdgriffith$style_elements$Style$variation,
-																									_user$project$Styles$Disabled,
-																									{
-																										ctor: '::',
-																										_0: A2(_mdgriffith$style_elements$Style$prop, 'background-color', 'rgba(0,0,0,0)'),
-																										_1: {
-																											ctor: '::',
-																											_0: A2(_mdgriffith$style_elements$Style$prop, 'color', 'rgba(0,0,0,.26)'),
-																											_1: {
-																												ctor: '::',
-																												_0: A2(_mdgriffith$style_elements$Style$prop, 'cursor', 'default'),
-																												_1: {ctor: '[]'}
-																											}
-																										}
-																									}),
-																								_1: {ctor: '[]'}
 																							}
 																						}
 																					}
@@ -30837,51 +31003,51 @@ var _user$project$Styles$stylesheet = A2(
 										}
 									}
 								}
-							}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_mdgriffith$style_elements$Style$style,
-							_user$project$Styles$Tooltip,
-							{
-								ctor: '::',
-								_0: A2(_mdgriffith$style_elements$Style$prop, 'transform-origin', 'top center'),
-								_1: {
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_mdgriffith$style_elements$Style$style,
+								_user$project$Styles$Tooltip,
+								{
 									ctor: '::',
-									_0: A2(_mdgriffith$style_elements$Style$prop, 'z-index', '999'),
+									_0: A2(_mdgriffith$style_elements$Style$prop, 'transform-origin', 'top center'),
 									_1: {
 										ctor: '::',
-										_0: _mdgriffith$style_elements$Style_Color$background(
-											A4(_elm_lang$core$Color$rgba, 97, 97, 97, 0.9)),
+										_0: A2(_mdgriffith$style_elements$Style$prop, 'z-index', '999'),
 										_1: {
 											ctor: '::',
-											_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$white),
+											_0: _mdgriffith$style_elements$Style_Color$background(
+												A4(_elm_lang$core$Color$rgba, 97, 97, 97, 0.9)),
 											_1: {
 												ctor: '::',
-												_0: _mdgriffith$style_elements$Style_Border$rounded(2),
+												_0: _mdgriffith$style_elements$Style_Color$text(_elm_lang$core$Color$white),
 												_1: {
 													ctor: '::',
-													_0: _mdgriffith$style_elements$Style_Font$size(10),
+													_0: _mdgriffith$style_elements$Style_Border$rounded(2),
 													_1: {
 														ctor: '::',
-														_0: _mdgriffith$style_elements$Style_Font$weight(500),
+														_0: _mdgriffith$style_elements$Style_Font$size(10),
 														_1: {
 															ctor: '::',
-															_0: A2(_mdgriffith$style_elements$Style$prop, 'line-height', '14px'),
+															_0: _mdgriffith$style_elements$Style_Font$weight(500),
 															_1: {
 																ctor: '::',
-																_0: _user$project$Styles$monospaceFont,
+																_0: A2(_mdgriffith$style_elements$Style$prop, 'line-height', '14px'),
 																_1: {
 																	ctor: '::',
-																	_0: A2(_mdgriffith$style_elements$Style$prop, 'max-width', '170px'),
+																	_0: _user$project$Styles$monospaceFont,
 																	_1: {
 																		ctor: '::',
-																		_0: A2(_mdgriffith$style_elements$Style$prop, 'padding', '8px'),
+																		_0: A2(_mdgriffith$style_elements$Style$prop, 'max-width', '170px'),
 																		_1: {
 																			ctor: '::',
-																			_0: A2(_mdgriffith$style_elements$Style$prop, 'text-align', 'center'),
-																			_1: {ctor: '[]'}
+																			_0: A2(_mdgriffith$style_elements$Style$prop, 'padding', '8px'),
+																			_1: {
+																				ctor: '::',
+																				_0: A2(_mdgriffith$style_elements$Style$prop, 'text-align', 'center'),
+																				_1: {ctor: '[]'}
+																			}
 																		}
 																	}
 																}
@@ -30892,9 +31058,9 @@ var _user$project$Styles$stylesheet = A2(
 											}
 										}
 									}
-								}
-							}),
-						_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
@@ -31101,6 +31267,7 @@ var _user$project$Main$svgFeatherIcon = function (className) {
 var _user$project$Main$blankModel = {
 	search: '',
 	copied: false,
+	focused: false,
 	icons: {ctor: '[]'},
 	selectedIcons: {ctor: '[]'}
 };
@@ -31122,14 +31289,14 @@ var _user$project$Main$downloadFile = _elm_lang$core$Native_Platform.outgoingPor
 	function (v) {
 		return v;
 	});
-var _user$project$Main$Model = F4(
-	function (a, b, c, d) {
-		return {search: a, copied: b, icons: c, selectedIcons: d};
+var _user$project$Main$Model = F5(
+	function (a, b, c, d, e) {
+		return {search: a, copied: b, focused: c, icons: d, selectedIcons: e};
 	});
 var _user$project$Main$init = function (data) {
 	var decoder = A3(
 		_elm_lang$core$Json_Decode$map2,
-		A2(_user$project$Main$Model, '', false),
+		A3(_user$project$Main$Model, '', false, false),
 		A2(
 			_elm_lang$core$Json_Decode$field,
 			'icons',
@@ -31169,11 +31336,19 @@ var _user$project$Main$init = function (data) {
 		{ctor: '[]'});
 };
 var _user$project$Main$DownloadFile = {ctor: 'DownloadFile'};
+var _user$project$Main$SetFocused = function (a) {
+	return {ctor: 'SetFocused', _0: a};
+};
 var _user$project$Main$Copied = {ctor: 'Copied'};
 var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p17 = msg;
 		switch (_p17.ctor) {
+			case 'NoOp':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{ctor: '[]'});
 			case 'Search':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
@@ -31229,7 +31404,7 @@ var _user$project$Main$update = F2(
 						model,
 						{copied: false}),
 					{ctor: '[]'});
-			default:
+			case 'DownloadFile':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					model,
@@ -31239,6 +31414,13 @@ var _user$project$Main$update = F2(
 							A2(_user$project$Main$renderCode, model.icons, model.selectedIcons)),
 						_1: {ctor: '[]'}
 					});
+			default:
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{focused: _p17._0}),
+					{ctor: '[]'});
 		}
 	});
 var _user$project$Main$CopyToClipboard = {ctor: 'CopyToClipboard'};
@@ -31248,6 +31430,7 @@ var _user$project$Main$ToggleIconSelection = function (a) {
 var _user$project$Main$Search = function (a) {
 	return {ctor: 'Search', _0: a};
 };
+var _user$project$Main$NoOp = {ctor: 'NoOp'};
 var _user$project$Main$view = function (model) {
 	var source = A3(
 		_mdgriffith$style_elements$Element$el,
@@ -31325,11 +31508,7 @@ var _user$project$Main$view = function (model) {
 											_1: {
 												ctor: '::',
 												_0: {ctor: '_Tuple2', _0: 'padding', _1: '0 15px'},
-												_1: {
-													ctor: '::',
-													_0: {ctor: '_Tuple2', _0: 'color', _1: 'dimgrey'},
-													_1: {ctor: '[]'}
-												}
+												_1: {ctor: '[]'}
 											}
 										}
 									}),
@@ -31375,67 +31554,102 @@ var _user$project$Main$view = function (model) {
 					}));
 		},
 		model.icons);
-	var search = A3(
-		_mdgriffith$style_elements$Element$row,
-		_user$project$Styles$SearchInput,
-		{
-			ctor: '::',
-			_0: _mdgriffith$style_elements$Element_Attributes$width(
-				_mdgriffith$style_elements$Element_Attributes$px(275)),
-			_1: {
+	var onTarget = function (list) {
+		var _p23 = list;
+		if ((_p23.ctor === '::') && (_p23._1.ctor === '[]')) {
+			return _elm_lang$core$Maybe$Just(_p23._0);
+		} else {
+			return _elm_lang$core$Maybe$Nothing;
+		}
+	}(
+		A2(
+			_elm_lang$core$List$filterMap,
+			function (_p24) {
+				var _p25 = _p24;
+				var _p26 = _p25._0;
+				return A2(_elm_lang$core$String$contains, model.search, _p26) ? _elm_lang$core$Maybe$Just(_p26) : _elm_lang$core$Maybe$Nothing;
+			},
+			model.icons));
+	var search = A2(
+		_mdgriffith$style_elements$Element$node,
+		'form',
+		A3(
+			_mdgriffith$style_elements$Element$row,
+			_user$project$Styles$SearchInput,
+			{
 				ctor: '::',
-				_0: _mdgriffith$style_elements$Element_Attributes$padding(10),
-				_1: {ctor: '[]'}
-			}
-		},
-		{
-			ctor: '::',
-			_0: A3(
-				_mdgriffith$style_elements$Element$inputText,
-				_user$project$Styles$None,
-				{
+				_0: _mdgriffith$style_elements$Element_Attributes$width(
+					_mdgriffith$style_elements$Element_Attributes$px(275)),
+				_1: {
 					ctor: '::',
-					_0: _mdgriffith$style_elements$Element_Events$onInput(_user$project$Main$Search),
+					_0: _mdgriffith$style_elements$Element_Attributes$padding(10),
 					_1: {
 						ctor: '::',
-						_0: _mdgriffith$style_elements$Element_Attributes$placeholder('Search icon'),
+						_0: A2(_mdgriffith$style_elements$Element_Attributes$vary, _user$project$Styles$Focused, model.focused),
 						_1: {
 							ctor: '::',
-							_0: _mdgriffith$style_elements$Element_Attributes$inlineStyle(
-								{
-									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'outline', _1: 'none'},
-									_1: {ctor: '[]'}
-								}),
-							_1: {
-								ctor: '::',
-								_0: _mdgriffith$style_elements$Element_Attributes$width(
-									_mdgriffith$style_elements$Element_Attributes$fill(1)),
-								_1: {ctor: '[]'}
-							}
+							_0: _mdgriffith$style_elements$Element_Events$onSubmit(
+								function () {
+									var _p27 = onTarget;
+									if (_p27.ctor === 'Nothing') {
+										return _user$project$Main$NoOp;
+									} else {
+										return _user$project$Main$ToggleIconSelection(_p27._0);
+									}
+								}()),
+							_1: {ctor: '[]'}
 						}
 					}
-				},
-				model.search),
-			_1: {
+				}
+			},
+			{
 				ctor: '::',
 				_0: A3(
-					_mdgriffith$style_elements$Element$el,
-					_user$project$Styles$None,
+					_mdgriffith$style_elements$Element$inputText,
+					_user$project$Styles$SearchInputText,
 					{
 						ctor: '::',
-						_0: _mdgriffith$style_elements$Element_Attributes$inlineStyle(
-							{
+						_0: _mdgriffith$style_elements$Element_Events$onInput(_user$project$Main$Search),
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Events$onFocus(
+								_user$project$Main$SetFocused(true)),
+							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'color', _1: 'lightgrey'},
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
+								_0: _mdgriffith$style_elements$Element_Events$onBlur(
+									_user$project$Main$SetFocused(false)),
+								_1: {
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Element_Attributes$placeholder('Search icon'),
+									_1: {
+										ctor: '::',
+										_0: _mdgriffith$style_elements$Element_Attributes$width(
+											_mdgriffith$style_elements$Element_Attributes$fill(1)),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
 					},
-					_mdgriffith$style_elements$Element$html(_user$project$Icons$search)),
-				_1: {ctor: '[]'}
-			}
-		});
+					model.search),
+				_1: {
+					ctor: '::',
+					_0: A3(
+						_mdgriffith$style_elements$Element$el,
+						_user$project$Styles$None,
+						{ctor: '[]'},
+						_mdgriffith$style_elements$Element$html(
+							function () {
+								var _p28 = onTarget;
+								if (_p28.ctor === 'Nothing') {
+									return _user$project$Icons$search;
+								} else {
+									return A2(_elm_lang$core$List$member, _p28._0, model.selectedIcons) ? _user$project$Icons$slash : _user$project$Icons$crosshair;
+								}
+							}())),
+					_1: {ctor: '[]'}
+				}
+			}));
 	var sourceControls = A3(
 		_mdgriffith$style_elements$Element$row,
 		_user$project$Styles$None,
@@ -31639,7 +31853,7 @@ var _user$project$Main$main = _elm_lang$html$Html$programWithFlags(
 		init: _user$project$Main$init,
 		view: _user$project$Main$view,
 		update: _user$project$Main$update,
-		subscriptions: function (_p23) {
+		subscriptions: function (_p29) {
 			return _elm_lang$core$Platform_Sub$none;
 		}
 	})(_elm_lang$core$Json_Decode$value);
