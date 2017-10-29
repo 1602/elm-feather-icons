@@ -208,7 +208,6 @@ view model =
                     [ onInput Search
                     , onFocus <| SetFocused True
                     , onBlur <| SetFocused False
-                    , Attributes.placeholder "Search icon"
                     , width <| fill 1
                     ]
             , (case onTarget of
