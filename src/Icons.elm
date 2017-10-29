@@ -1,9 +1,10 @@
 module Icons
     exposing
-        ( alertTriangle
-        , clipboard
+        ( clipboard
+        , crosshair
         , download
         , search
+        , slash
         )
 
 import Html exposing (Html)
@@ -26,20 +27,22 @@ svgFeatherIcon className =
         ]
 
 
-alertTriangle : Html msg
-alertTriangle =
-    svgFeatherIcon "alert-triangle"
-        [ Svg.path [ d "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" ] []
-        , Svg.line [ x1 "12", y1 "9", x2 "12", y2 "13" ] []
-        , Svg.line [ x1 "12", y1 "17", x2 "12", y2 "17" ] []
-        ]
-
-
 clipboard : Html msg
 clipboard =
     svgFeatherIcon "clipboard"
         [ Svg.path [ d "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" ] []
         , Svg.rect [ x "8", y "2", width "8", height "4", rx "1", ry "1" ] []
+        ]
+
+
+crosshair : Html msg
+crosshair =
+    svgFeatherIcon "crosshair"
+        [ Svg.circle [ cx "12", cy "12", r "10" ] []
+        , Svg.line [ x1 "22", y1 "12", x2 "18", y2 "12" ] []
+        , Svg.line [ x1 "6", y1 "12", x2 "2", y2 "12" ] []
+        , Svg.line [ x1 "12", y1 "6", x2 "12", y2 "2" ] []
+        , Svg.line [ x1 "12", y1 "22", x2 "12", y2 "18" ] []
         ]
 
 
@@ -57,4 +60,12 @@ search =
     svgFeatherIcon "search"
         [ Svg.circle [ cx "10.5", cy "10.5", r "7.5" ] []
         , Svg.line [ x1 "21", y1 "21", x2 "15.8", y2 "15.8" ] []
+        ]
+
+
+slash : Html msg
+slash =
+    svgFeatherIcon "slash"
+        [ Svg.circle [ cx "12", cy "12", r "10" ] []
+        , Svg.line [ x1 "4.93", y1 "4.93", x2 "19.07", y2 "19.07" ] []
         ]
