@@ -31620,13 +31620,9 @@ var _user$project$Main$view = function (model) {
 									_user$project$Main$SetFocused(false)),
 								_1: {
 									ctor: '::',
-									_0: _mdgriffith$style_elements$Element_Attributes$placeholder('Search icon'),
-									_1: {
-										ctor: '::',
-										_0: _mdgriffith$style_elements$Element_Attributes$width(
-											_mdgriffith$style_elements$Element_Attributes$fill(1)),
-										_1: {ctor: '[]'}
-									}
+									_0: _mdgriffith$style_elements$Element_Attributes$width(
+										_mdgriffith$style_elements$Element_Attributes$fill(1)),
+									_1: {ctor: '[]'}
 								}
 							}
 						}
