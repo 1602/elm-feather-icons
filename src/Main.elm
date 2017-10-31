@@ -3,6 +3,7 @@ port module Main exposing (main)
 import Process
 import Task
 import Html exposing (Html)
+import HtmlSource
 import HtmlParser exposing (Node(Element, Text), parse)
 import HtmlParser.Util exposing (toVirtualDomSvg)
 import Json.Decode as Decode exposing (Value, field, string)
@@ -146,13 +147,13 @@ update msg model =
                 { model | selectedIcons = selectedIcons } ! [ saveSelectedIcons selectedIcons ]
 
         CopyToClipboard ->
-            { model | copied = True } ! [ renderCode model.icons model.selectedIcons |> copyToClipboard, Process.sleep 500 |> Task.perform (\_ -> Copied) ]
+            { model | copied = True } ! [ IconSource.render model.icons model.selectedIcons |> copyToClipboard, Process.sleep 500 |> Task.perform (\_ -> Copied) ]
 
         Copied ->
             { model | copied = False } ! []
 
         DownloadFile ->
-            model ! [ renderCode model.icons model.selectedIcons |> downloadFile ]
+            model ! [ IconSource.render model.icons model.selectedIcons |> downloadFile ]
 
         SetFocused f ->
             { model | focused = f } ! []
@@ -323,116 +324,3 @@ svgFeatherIcon className =
         , SvgAttrs.viewBox "0 0 24 24"
         , SvgAttrs.width "24"
         ]
-
-
-makeName : String -> String
-makeName handle =
-    handle
-        |> replace All (regex "-.") (\{ match } -> match |> String.dropLeft 1 |> String.toUpper)
-
-
-makeFunction : List ( String, Html Msg, List Node ) -> String -> String
-makeFunction icons name =
-    icons
-        |> List.filter (\( n, _, _ ) -> n == name)
-        |> List.head
-        |> Maybe.map (\( n, _, x ) -> ( n, x ))
-        |> Maybe.withDefault ( "", [] )
-        |> (\( n, nodes ) ->
-                let
-                    name =
-                        makeName n
-                in
-                    name
-                        ++ " : Html msg\n"
-                        ++ name
-                        ++ " = \n    svgFeatherIcon \""
-                        ++ n
-                        ++ "\"\n"
-                        ++ "        [ "
-                        ++ (nodes |> List.map printNode |> String.join ("\n        , "))
-                        ++ "\n        ]"
-           )
-
-
-printNode : Node -> String
-printNode n =
-    case n of
-        Element name attrs children ->
-            printNodeName name ++ (printAttrs attrs) ++ (printChildren children)
-
-        Text s ->
-            s |> toString
-
-        _ ->
-            ""
-
-
-printNodeName : String -> String
-printNodeName name =
-    "Svg." ++ name
-
-
-printAttrs : List ( String, String ) -> String
-printAttrs attrs =
-    " [ "
-        ++ (attrs
-                |> List.map (\( name, val ) -> name ++ " " ++ (toString val))
-                |> String.join ", "
-           )
-        ++ " ]"
-
-
-printChildren : List Node -> String
-printChildren children =
-    case children of
-        [] ->
-            " []"
-
-        ch ->
-            " [ "
-                ++ (ch
-                        |> List.map printNode
-                        |> String.join ", "
-                   )
-                ++ " ]"
-
-
-renderCode : List ( String, Html Msg, List Node ) -> List String -> String
-renderCode icons selectedIcons =
-    (if List.isEmpty selectedIcons then
-        "module Icons"
-     else
-        "module Icons\n    exposing\n        ( "
-            ++ (selectedIcons |> List.map makeName |> String.join "\n        , ")
-            ++ "\n        )"
-    )
-        ++ codeHeader
-        ++ (selectedIcons |> List.map (makeFunction icons) |> String.join "\n\n\n")
-
-
-codeHeader : String
-codeHeader =
-    """
-
-import Html exposing (Html)
-import Svg exposing (Svg, svg)
-import Svg.Attributes exposing (..)
-
-
-svgFeatherIcon : String -> List (Svg msg) -> Html msg
-svgFeatherIcon className =
-    svg
-        [ class <| "feather feather-" ++ className
-        , fill "none"
-        , height "24"
-        , stroke "currentColor"
-        , strokeLinecap "round"
-        , strokeLinejoin "round"
-        , strokeWidth "2"
-        , viewBox "0 0 24 24"
-        , width "24"
-        ]
-
-
-"""
