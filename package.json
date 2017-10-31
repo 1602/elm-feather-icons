@@ -9,6 +9,7 @@
     "deploy": "mkdir -p dist/ && cp index.html dist/ && elm-make src/Main.elm --yes --output=dist/elm.full.js && uglifyjs dist/elm.full.js > dist/elm.js && gh-pages -d dist"
   },
   "devDependencies": {
+    "feather-icons": "^3.3.0",
     "elm": "^0.18.0",
     "elm-live": "^2.7.4",
     "elm-test": "^0.18.7",
