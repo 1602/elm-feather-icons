@@ -28,14 +28,8 @@ main =
 init : Model -> ( Model, Cmd Msg )
 init m =
     let
-        selectedIcons =
-            m |> List.map (\( x, _ ) -> x)
-
-        icons =
-            m |> List.map (\( k, v ) -> ( k, Nothing, v |> HtmlParser.parse ))
-
         render =
-            IconSource.render icons selectedIcons
+            IconSource.renderWithDocs m
     in
         ( m, output render )
 
