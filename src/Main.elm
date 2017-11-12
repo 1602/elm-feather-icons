@@ -3,14 +3,13 @@ port module Main exposing (main)
 import Process
 import Task
 import Html exposing (Html)
-import HtmlSource
+import IconSource
 import HtmlParser exposing (Node(Element, Text), parse)
 import HtmlParser.Util exposing (toVirtualDomSvg)
 import Json.Decode as Decode exposing (Value, field, string)
 import Svg exposing (Svg, svg)
 import Svg.Attributes as SvgAttrs
 import Element.Events exposing (onClick, onInput, onFocus, onBlur, onSubmit)
-import Regex exposing (regex, replace, HowMany(All))
 import Element.Attributes as Attributes
     exposing
         ( verticalCenter
@@ -272,7 +271,7 @@ view model =
 
         source =
             model.selectedIcons
-                |> renderCode model.icons
+                |> IconSource.render model.icons
                 |> text
                 |> el None
                     [ padding 20
