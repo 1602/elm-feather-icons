@@ -89,29 +89,30 @@ init data =
         decoder =
             Decode.map2 (Model "" False False)
                 (field "icons" <|
-                    Decode.map
-                        (List.reverse
-                            >> (List.map
-                                    (\( name, icon ) ->
-                                        let
-                                            nodes =
-                                                icon |> parse
-                                        in
-                                            ( name
-                                            , nodes |> toVirtualDomSvg |> svgFeatherIcon name
-                                            , nodes
-                                            )
-                                    )
-                               )
-                        )
-                    <|
-                        Decode.keyValuePairs string
+                    (Decode.keyValuePairs (Decode.at [ "contents" ] string)
+                        |> Decode.map
+                            (List.reverse
+                                >> (List.map
+                                        (\( name, icon ) ->
+                                            let
+                                                nodes =
+                                                    icon |> parse
+                                            in
+                                                ( name
+                                                , nodes |> toVirtualDomSvg |> svgFeatherIcon name
+                                                , nodes
+                                                )
+                                        )
+                                   )
+                            )
+                    )
                 )
                 (field "selectedIcons" <| Decode.list string)
 
         model =
             data
                 |> Decode.decodeValue decoder
+                |> Result.mapError (Debug.log "LoadingError")
                 |> Result.withDefault blankModel
     in
         model ! []
