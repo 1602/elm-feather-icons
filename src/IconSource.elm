@@ -22,7 +22,10 @@ renderWithDocs icons =
     ("module FeatherIcons\n    exposing\n        ( "
         ++ (icons
                 |> List.map (\( n, _ ) -> makeName n)
+                |> (::) "IconBuilder"
+                |> (::) "customIcon"
                 |> (::) "withSize"
+                |> (::) "withSizeUnit"
                 |> (::) "withClass"
                 |> (::) "toHtml"
                 |> String.join "\n        , "
@@ -36,7 +39,7 @@ renderWithDocs icons =
 
 docsHeader : List ( String, String ) -> String
 docsHeader icons =
-    "\n\n{-|\n# Icon builder\n\n@docs withSize, withClass, toHtml\n\n# Icons\n@docs "
+    "\n\n{-|\n# Icon builder\n\n@docs IconBuilder, withSize, withSizeUnit, withClass, toHtml, customIcon\n\n# Icons\n@docs "
         ++ (icons
                 |> List.map (\( x, _ ) -> makeName x)
                 |> String.join ", "
@@ -58,7 +61,7 @@ import Svg.Attributes exposing (..)
 type alias IconAttributes =
     { size : Float
     , sizeUnit : String
-    , class : String
+    , class : Maybe String
     }
 
 
@@ -68,14 +71,38 @@ defaultAttributes : String -> IconAttributes
 defaultAttributes name =
     { size = 24
     , sizeUnit = ""
-    , class = "feather feather-" ++ name
+    , class = Just <| "feather feather-" ++ name
     }
 
 
+{-| Opaque type representing icon builder
+-}
 type IconBuilder msg
     = IconBuilder
         { attrs : IconAttributes
         , src : List (Svg msg)
+        }
+
+
+{-| Build custom svg icon
+
+    [ Svg.line [ x1 "21", y1 "10", x2 "3", y2 "10" ] []
+    , Svg.line [ x1 "21", y1 "6", x2 "3", y2 "6" ] []
+    , Svg.line [ x1 "21", y1 "14", x2 "3", y2 "14" ] []
+    , Svg.line [ x1 "21", y1 "18", x2 "3", y2 "18" ] []
+    ]
+        |> customIcon
+        |> withSize 2.1
+        |> withSizeUnit "em"
+        |> toHtml []
+
+Example output: <svg xmlns="http://www.w3.org/2000/svg" width="2.1em" height="2.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+-}
+customIcon : List (Svg msg) -> IconBuilder msg
+customIcon src =
+    IconBuilder
+        { src = src
+        , attrs = IconAttributes 24 "" Nothing
         }
 
 
@@ -108,10 +135,10 @@ withSizeUnit sizeUnit (IconBuilder { attrs, src }) =
 -}
 withClass : String -> IconBuilder msg -> IconBuilder msg
 withClass class (IconBuilder { attrs, src }) =
-    IconBuilder { attrs = { attrs | class = class }, src = src }
+    IconBuilder { attrs = { attrs | class = Just class }, src = src }
 
 
-{-| Build icon
+{-| Build icon, ready to use in html. It accepts list of svg attributes, for example in case if you want to add an event handler.
 
     -- default
     Icon.download
@@ -128,20 +155,29 @@ toHtml attributes (IconBuilder { src, attrs }) =
     let
         strSize =
             attrs.size |> toString
-    in
-        svg
-            ([ class attrs.class
-             , fill "none"
-             , height strSize
-             , width strSize
+
+        baseAttributes =
+             [ fill "none"
+             , height <| strSize ++ attrs.sizeUnit
+             , width <| strSize ++ attrs.sizeUnit
              , stroke "currentColor"
              , strokeLinecap "round"
              , strokeLinejoin "round"
              , strokeWidth "2"
              , viewBox "0 0 24 24"
              ]
-                ++ attributes
-            )
+
+        combinedAttributes =
+            (case attrs.class of
+                Just c ->
+                    (class c) :: baseAttributes
+
+                Nothing ->
+                    baseAttributes
+            ) ++ attributes
+    in
+        svg
+            combinedAttributes
             src
 
 
