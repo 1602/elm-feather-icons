@@ -20,7 +20,13 @@ render icons selectedIcons =
 renderWithDocs : List ( String, String ) -> String
 renderWithDocs icons =
     ("module FeatherIcons\n    exposing\n        ( "
-        ++ (icons |> List.map (\( n, _ ) -> makeName n) |> String.join "\n        , ")
+        ++ (icons
+                |> List.map (\( n, _ ) -> makeName n)
+                |> (::) "withSize"
+                |> (::) "withClass"
+                |> (::) "toHtml"
+                |> String.join "\n        , "
+           )
         ++ "\n        )"
     )
         ++ (docsHeader icons)
@@ -30,7 +36,12 @@ renderWithDocs icons =
 
 docsHeader : List ( String, String ) -> String
 docsHeader icons =
-    "\n\n{-|\n@docs " ++ (icons |> List.map (\( x, _ ) -> makeName x) |> String.join ", ") ++ "\n-}"
+    "\n\n{-|\n# Icon builder\n\n@docs withSize, withClass, toHtml\n\n# Icons\n@docs "
+        ++ (icons
+                |> List.map (\( x, _ ) -> makeName x)
+                |> String.join ", "
+           )
+        ++ "\n-}"
 
 
 codeHeader : String
@@ -42,20 +53,89 @@ import Svg exposing (Svg, svg)
 import Svg.Attributes exposing (..)
 
 
-svgFeatherIcon : String -> List (Svg msg) -> Html msg
-svgFeatherIcon className =
-    svg
-        [ class <| "feather feather-" ++ className
-        , fill "none"
-        , height "24"
-        , stroke "currentColor"
-        , strokeLinecap "round"
-        , strokeLinejoin "round"
-        , strokeWidth "2"
-        , viewBox "0 0 24 24"
-        , width "24"
-        ]
+{-| Customizable attributes of icon
+-}
+type alias IconAttributes =
+    { size : Int
+    , class : String
+    }
 
+
+{-| Default attributes, first argument is icon name
+-}
+defaultAttributes : String -> IconAttributes
+defaultAttributes name =
+    { size = 24
+    , class = "feather feather-" ++ name
+    }
+
+
+type IconBuilder msg
+    = IconBuilder
+        { attrs : IconAttributes
+        , src : List (Svg msg)
+        }
+
+
+{-| Set size attribute of an icon
+
+    Icon.download
+        |> Icon.withSize 10
+        |> Icon.toHtml []
+-}
+withSize : Int -> IconBuilder msg -> IconBuilder msg
+withSize size (IconBuilder { attrs, src }) =
+    IconBuilder { attrs = { attrs | size = size }, src = src }
+
+
+{-| Overwrite class attribute of an icon
+
+    Icon.download
+        |> Icon.withClass "icon-download"
+        |> Icon.toHtml []
+-}
+withClass : String -> IconBuilder msg -> IconBuilder msg
+withClass class (IconBuilder { attrs, src }) =
+    IconBuilder { attrs = { attrs | class = class }, src = src }
+
+
+{-| Build icon
+
+    -- default
+    Icon.download
+        |> Icon.toHtml []
+
+    -- with some attributes
+    Icon.download
+        |> Icon.withSize 10
+        |> Icon.withClass "icon-download"
+        |> Icon.toHtml [ onClick Download ]
+-}
+toHtml : List (Svg.Attribute msg) -> IconBuilder msg -> Html msg
+toHtml attributes (IconBuilder { src, attrs }) =
+    let
+        strSize =
+            attrs.size |> toString
+    in
+        svg
+            ([ class attrs.class
+             , fill "none"
+             , height strSize
+             , width strSize
+             , stroke "currentColor"
+             , strokeLinecap "round"
+             , strokeLinejoin "round"
+             , strokeWidth "2"
+             , viewBox "0 0 24 24"
+             ]
+                ++ attributes
+            )
+            src
+
+
+makeBuilder : String -> List (Svg msg) -> IconBuilder msg
+makeBuilder name src =
+    IconBuilder { attrs = defaultAttributes name, src = src }
 
 """
 
@@ -103,9 +183,9 @@ functionSource nodes name =
             makeName name
     in
         safeName
-            ++ " : Html msg\n"
+            ++ " : IconBuilder msg\n"
             ++ safeName
-            ++ " =\n    svgFeatherIcon \""
+            ++ " =\n    makeBuilder \""
             ++ name
             ++ "\"\n"
             ++ "        [ "
