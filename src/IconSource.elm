@@ -56,7 +56,8 @@ import Svg.Attributes exposing (..)
 {-| Customizable attributes of icon
 -}
 type alias IconAttributes =
-    { size : Int
+    { size : Float
+    , sizeUnit : String
     , class : String
     }
 
@@ -66,6 +67,7 @@ type alias IconAttributes =
 defaultAttributes : String -> IconAttributes
 defaultAttributes name =
     { size = 24
+    , sizeUnit = ""
     , class = "feather feather-" ++ name
     }
 
@@ -83,9 +85,19 @@ type IconBuilder msg
         |> Icon.withSize 10
         |> Icon.toHtml []
 -}
-withSize : Int -> IconBuilder msg -> IconBuilder msg
+withSize : Float -> IconBuilder msg -> IconBuilder msg
 withSize size (IconBuilder { attrs, src }) =
     IconBuilder { attrs = { attrs | size = size }, src = src }
+
+{-| Set unit of size attribute of an icon, one of: "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%"
+
+    Icon.download
+        |> Icon.withSizeUnit "%"
+        |> Icon.toHtml []
+-}
+withSizeUnit : String -> IconBuilder msg -> IconBuilder msg
+withSizeUnit sizeUnit (IconBuilder { attrs, src }) =
+    IconBuilder { attrs = { attrs | sizeUnit = sizeUnit }, src = src }
 
 
 {-| Overwrite class attribute of an icon
