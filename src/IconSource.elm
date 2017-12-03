@@ -77,10 +77,10 @@ defaultAttributes name =
 
 {-| Opaque type representing icon builder
 -}
-type IconBuilder msg
+type IconBuilder
     = IconBuilder
         { attrs : IconAttributes
-        , src : List (Svg msg)
+        , src : List (Svg Never)
         }
 
 
@@ -98,7 +98,7 @@ type IconBuilder msg
 
 Example output: <svg xmlns="http://www.w3.org/2000/svg" width="2.1em" height="2.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
 -}
-customIcon : List (Svg msg) -> IconBuilder msg
+customIcon : List (Svg Never) -> IconBuilder
 customIcon src =
     IconBuilder
         { src = src
@@ -112,7 +112,7 @@ customIcon src =
         |> Icon.withSize 10
         |> Icon.toHtml []
 -}
-withSize : Float -> IconBuilder msg -> IconBuilder msg
+withSize : Float -> IconBuilder -> IconBuilder
 withSize size (IconBuilder { attrs, src }) =
     IconBuilder { attrs = { attrs | size = size }, src = src }
 
@@ -122,7 +122,7 @@ withSize size (IconBuilder { attrs, src }) =
         |> Icon.withSizeUnit "%"
         |> Icon.toHtml []
 -}
-withSizeUnit : String -> IconBuilder msg -> IconBuilder msg
+withSizeUnit : String -> IconBuilder -> IconBuilder
 withSizeUnit sizeUnit (IconBuilder { attrs, src }) =
     IconBuilder { attrs = { attrs | sizeUnit = sizeUnit }, src = src }
 
@@ -133,7 +133,7 @@ withSizeUnit sizeUnit (IconBuilder { attrs, src }) =
         |> Icon.withClass "icon-download"
         |> Icon.toHtml []
 -}
-withClass : String -> IconBuilder msg -> IconBuilder msg
+withClass : String -> IconBuilder -> IconBuilder
 withClass class (IconBuilder { attrs, src }) =
     IconBuilder { attrs = { attrs | class = Just class }, src = src }
 
@@ -150,7 +150,7 @@ withClass class (IconBuilder { attrs, src }) =
         |> Icon.withClass "icon-download"
         |> Icon.toHtml [ onClick Download ]
 -}
-toHtml : List (Svg.Attribute msg) -> IconBuilder msg -> Html msg
+toHtml : List (Svg.Attribute msg) -> IconBuilder -> Html msg
 toHtml attributes (IconBuilder { src, attrs }) =
     let
         strSize =
@@ -176,12 +176,12 @@ toHtml attributes (IconBuilder { src, attrs }) =
                     baseAttributes
             ) ++ attributes
     in
-        svg
-            combinedAttributes
-            src
+        src
+            |> List.map (Svg.map never)
+            |> svg combinedAttributes
 
 
-makeBuilder : String -> List (Svg msg) -> IconBuilder msg
+makeBuilder : String -> List (Svg Never) -> IconBuilder
 makeBuilder name src =
     IconBuilder { attrs = defaultAttributes name, src = src }
 
@@ -231,7 +231,7 @@ functionSource nodes name =
             makeName name
     in
         safeName
-            ++ " : IconBuilder msg\n"
+            ++ " : IconBuilder\n"
             ++ safeName
             ++ " =\n    makeBuilder \""
             ++ name
