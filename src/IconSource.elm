@@ -22,7 +22,7 @@ renderWithDocs icons =
     ("module FeatherIcons\n    exposing\n        ( "
         ++ (icons
                 |> List.map (\( n, _ ) -> makeName n)
-                |> (::) "IconBuilder"
+                |> (::) "Icon"
                 |> (::) "customIcon"
                 |> (::) "withSize"
                 |> (::) "withSizeUnit"
@@ -39,7 +39,42 @@ renderWithDocs icons =
 
 docsHeader : List ( String, String ) -> String
 docsHeader icons =
-    "\n\n{-|\n# Icon builder\n\n@docs IconBuilder, withSize, withSizeUnit, withClass, toHtml, customIcon\n\n# Icons\n@docs "
+    """
+{-|
+# Basic Usage
+
+Using a feather icon in your view is as easy as:
+
+```elm
+featherIcon : Html msg
+featherIcon =
+    FeatherIcons.feather
+        |> FeatherIcons.toHtml []
+```
+
+Change `FeatherIcons.feather` by the icon you prefer, A list of all icons is visible here: https://1602.github.io/elm-feather-icons/
+
+All icons of this package are provided as the internal type `Icon`. To turn them into an `Html msg`, simply use the `toHtml` function.
+
+@docs Icon, toHtml
+
+# Customize Icons
+
+Feather icons are 24px size by default, and come with two css classes, `feather` and `feather-"icon-name"`. For the aperture icon for example, this will be: `feather feather-aperture`.
+
+To customize it's class and size attributes simply use the `withClass` and `withSize` functions before turning them into Html with `toHtml`.
+
+@docs withClass, withSize, withSizeUnit
+
+# New Custom Icons
+
+If you'd like to use same API while creating personally designed icons, you can use the `customIcon` function. You have to provide it with a `List (Svg Never)` that will be embedded into the icon.
+
+@docs customIcon
+
+# Feather Icons List
+"""
+        ++ "\n@docs "
         ++ (icons
                 |> List.map (\( x, _ ) -> makeName x)
                 |> String.join ", "
@@ -77,8 +112,8 @@ defaultAttributes name =
 
 {-| Opaque type representing icon builder
 -}
-type IconBuilder
-    = IconBuilder
+type Icon
+    = Icon
         { attrs : IconAttributes
         , src : List (Svg Never)
         }
@@ -98,9 +133,9 @@ type IconBuilder
 
 Example output: <svg xmlns="http://www.w3.org/2000/svg" width="2.1em" height="2.1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
 -}
-customIcon : List (Svg Never) -> IconBuilder
+customIcon : List (Svg Never) -> Icon
 customIcon src =
-    IconBuilder
+    Icon
         { src = src
         , attrs = IconAttributes 24 "" Nothing
         }
@@ -112,19 +147,20 @@ customIcon src =
         |> Icon.withSize 10
         |> Icon.toHtml []
 -}
-withSize : Float -> IconBuilder -> IconBuilder
-withSize size (IconBuilder { attrs, src }) =
-    IconBuilder { attrs = { attrs | size = size }, src = src }
+withSize : Float -> Icon -> Icon
+withSize size (Icon { attrs, src }) =
+    Icon { attrs = { attrs | size = size }, src = src }
 
 {-| Set unit of size attribute of an icon, one of: "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%"
 
     Icon.download
+        |> Icon.withSize 50
         |> Icon.withSizeUnit "%"
         |> Icon.toHtml []
 -}
-withSizeUnit : String -> IconBuilder -> IconBuilder
-withSizeUnit sizeUnit (IconBuilder { attrs, src }) =
-    IconBuilder { attrs = { attrs | sizeUnit = sizeUnit }, src = src }
+withSizeUnit : String -> Icon -> Icon
+withSizeUnit sizeUnit (Icon { attrs, src }) =
+    Icon { attrs = { attrs | sizeUnit = sizeUnit }, src = src }
 
 
 {-| Overwrite class attribute of an icon
@@ -133,9 +169,9 @@ withSizeUnit sizeUnit (IconBuilder { attrs, src }) =
         |> Icon.withClass "icon-download"
         |> Icon.toHtml []
 -}
-withClass : String -> IconBuilder -> IconBuilder
-withClass class (IconBuilder { attrs, src }) =
-    IconBuilder { attrs = { attrs | class = Just class }, src = src }
+withClass : String -> Icon -> Icon
+withClass class (Icon { attrs, src }) =
+    Icon { attrs = { attrs | class = Just class }, src = src }
 
 
 {-| Build icon, ready to use in html. It accepts list of svg attributes, for example in case if you want to add an event handler.
@@ -150,8 +186,8 @@ withClass class (IconBuilder { attrs, src }) =
         |> Icon.withClass "icon-download"
         |> Icon.toHtml [ onClick Download ]
 -}
-toHtml : List (Svg.Attribute msg) -> IconBuilder -> Html msg
-toHtml attributes (IconBuilder { src, attrs }) =
+toHtml : List (Svg.Attribute msg) -> Icon -> Html msg
+toHtml attributes (Icon { src, attrs }) =
     let
         strSize =
             attrs.size |> toString
@@ -181,9 +217,9 @@ toHtml attributes (IconBuilder { src, attrs }) =
             |> svg combinedAttributes
 
 
-makeBuilder : String -> List (Svg Never) -> IconBuilder
+makeBuilder : String -> List (Svg Never) -> Icon
 makeBuilder name src =
-    IconBuilder { attrs = defaultAttributes name, src = src }
+    Icon { attrs = defaultAttributes name, src = src }
 
 """
 
@@ -231,7 +267,7 @@ functionSource nodes name =
             makeName name
     in
         safeName
-            ++ " : IconBuilder\n"
+            ++ " : Icon\n"
             ++ safeName
             ++ " =\n    makeBuilder \""
             ++ name
