@@ -24,8 +24,9 @@ renderWithDocs icons =
                 |> List.map (\( n, _ ) -> makeName n)
                 |> (::) "Icon"
                 |> (::) "customIcon"
-                |> (::) "withSize"
+                |> (::) "withStrokeWidth"
                 |> (::) "withSizeUnit"
+                |> (::) "withSize"
                 |> (::) "withClass"
                 |> (::) "toHtml"
                 |> String.join "\n        , "
@@ -52,7 +53,7 @@ featherIcon =
         |> FeatherIcons.toHtml []
 ```
 
-Change `FeatherIcons.feather` by the icon you prefer, A list of all icons is visible here: https://1602.github.io/elm-feather-icons/
+Change `FeatherIcons.feather` by the icon you prefer, a list of all icons is visible here: https://1602.github.io/elm-feather-icons/
 
 All icons of this package are provided as the internal type `Icon`. To turn them into an `Html msg`, simply use the `toHtml` function.
 
@@ -64,7 +65,7 @@ Feather icons are 24px size by default, and come with two css classes, `feather`
 
 To customize it's class and size attributes simply use the `withClass` and `withSize` functions before turning them into Html with `toHtml`.
 
-@docs withClass, withSize, withSizeUnit
+@docs withClass, withSize, withSizeUnit, withStrokeWidth
 
 # New Custom Icons
 
@@ -96,6 +97,7 @@ import Svg.Attributes exposing (..)
 type alias IconAttributes =
     { size : Float
     , sizeUnit : String
+    , strokeWidth : Float
     , class : Maybe String
     }
 
@@ -106,6 +108,7 @@ defaultAttributes : String -> IconAttributes
 defaultAttributes name =
     { size = 24
     , sizeUnit = ""
+    , strokeWidth = 2
     , class = Just <| "feather feather-" ++ name
     }
 
@@ -137,7 +140,7 @@ customIcon : List (Svg Never) -> Icon
 customIcon src =
     Icon
         { src = src
-        , attrs = IconAttributes 24 "" Nothing
+        , attrs = IconAttributes 24 "" 2 Nothing
         }
 
 
@@ -161,6 +164,17 @@ withSize size (Icon { attrs, src }) =
 withSizeUnit : String -> Icon -> Icon
 withSizeUnit sizeUnit (Icon { attrs, src }) =
     Icon { attrs = { attrs | sizeUnit = sizeUnit }, src = src }
+
+
+{-| Set thickness of icon lines, useful when inlining icons with bold / normal text.
+
+    Icon.playCircle
+        |> Icon.withStrokeWidth 1
+        |> Icon.toHtml []
+-}
+withStrokeWidth : Float -> Icon -> Icon
+withStrokeWidth strokeWidth (Icon { attrs, src }) =
+    Icon { attrs = { attrs | strokeWidth = strokeWidth }, src = src }
 
 
 {-| Overwrite class attribute of an icon
@@ -193,15 +207,15 @@ toHtml attributes (Icon { src, attrs }) =
             attrs.size |> toString
 
         baseAttributes =
-             [ fill "none"
-             , height <| strSize ++ attrs.sizeUnit
-             , width <| strSize ++ attrs.sizeUnit
-             , stroke "currentColor"
-             , strokeLinecap "round"
-             , strokeLinejoin "round"
-             , strokeWidth "2"
-             , viewBox "0 0 24 24"
-             ]
+            [ fill "none"
+            , height <| strSize ++ attrs.sizeUnit
+            , width <| strSize ++ attrs.sizeUnit
+            , stroke "currentColor"
+            , strokeLinecap "round"
+            , strokeLinejoin "round"
+            , strokeWidth <| toString attrs.strokeWidth
+            , viewBox "0 0 24 24"
+            ]
 
         combinedAttributes =
             (case attrs.class of
