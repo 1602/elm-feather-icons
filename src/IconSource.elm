@@ -1,6 +1,6 @@
 module IconSource exposing (render, renderWithDocs)
 
-import Regex exposing (regex, replace, HowMany(All))
+import Regex exposing (regex, replace, HowMany(All, AtMost))
 import HtmlParser exposing (Node(Element, Text), parse)
 
 
@@ -133,10 +133,11 @@ type Icon
     , Svg.line [ x1 "21", y1 "18", x2 "3", y2 "18" ] []
     ]
         |> customIcon
+        |> withSize 26
         |> withViewBox "0 0 26 26"
         |> toHtml []
 
-Example output: <svg xmlns="http://www.w3.org/2000/svg" width="2.1em" height="2.1em" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+Example output: <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
 -}
 customIcon : List (Svg Never) -> Icon
 customIcon src =
@@ -326,14 +327,40 @@ printNodeName name =
     "Svg." ++ name
 
 
+camelize : String -> String
+camelize s =
+    let
+        firstLetter =
+            regex "^."
+
+        upcaseFirstLetter =
+            replace (AtMost 1) firstLetter (\x -> x.match |> String.toUpper)
+    in
+        case s |> String.split "-" of
+            [] ->
+                ""
+
+            head :: [] ->
+                head
+
+            head :: tail ->
+                head ++ (tail |> List.map upcaseFirstLetter |> String.join "")
+
+
 printAttrName : String -> String
 printAttrName name =
     case name of
         "x" ->
             "Svg.Attributes.x"
 
+        "viewbox" ->
+            "viewBox"
+
+        "xmlns" ->
+            "xmlSpace"
+
         n ->
-            n
+            n |> camelize
 
 
 printAttrs : List ( String, String ) -> String

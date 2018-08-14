@@ -11,10 +11,10 @@
     "update-package": "/usr/local/bin/elm-make src/Headless.elm --output source-builder.js && node build.js > ../elm-feather/src/FeatherIcons.elm"
   },
   "devDependencies": {
-    "feather-icons": "^3.3.0",
     "elm": "^0.18.0",
     "elm-live": "^2.7.4",
     "elm-test": "^0.18.7",
+    "feather-icons": "^4.7.3",
     "gh-pages": "^1.0.0",
     "uglify-js": "^3.1.3"
   }
