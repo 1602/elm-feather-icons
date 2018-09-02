@@ -1,13 +1,15 @@
 module IconSource exposing (render, renderWithDocs)
 
-import Regex exposing (regex, replace, HowMany(All, AtMost))
+import Base64
 import HtmlParser exposing (Node(Element, Text), parse)
+import Regex exposing (HowMany(All, AtMost), regex, replace)
 
 
 render : List ( String, a, List Node ) -> List String -> String
 render icons selectedIcons =
     (if List.isEmpty selectedIcons then
         "module Icons"
+
      else
         "module Icons\n    exposing\n        ( "
             ++ (selectedIcons |> List.map makeName |> String.join "\n        , ")
@@ -34,7 +36,7 @@ renderWithDocs icons =
            )
         ++ "\n        )"
     )
-        ++ (docsHeader icons)
+        ++ docsHeader icons
         ++ codeHeader
         ++ (icons |> List.map makeDocumentedFunction |> String.join "\n\n\n")
 
@@ -91,6 +93,8 @@ codeHeader =
 import Html exposing (Html)
 import Svg exposing (Svg, svg)
 import Svg.Attributes exposing (..)
+import VirtualDom
+import Json.Encode
 
 
 {-| Customizable attributes of icon
@@ -217,7 +221,7 @@ toHtml : List (Svg.Attribute msg) -> Icon -> Html msg
 toHtml attributes (Icon { src, attrs }) =
     let
         strSize =
-            attrs.size |> toString
+            attrs.size |> String.fromFloat
 
         baseAttributes =
             [ fill "none"
@@ -226,7 +230,7 @@ toHtml attributes (Icon { src, attrs }) =
             , stroke "currentColor"
             , strokeLinecap "round"
             , strokeLinejoin "round"
-            , strokeWidth <| toString attrs.strokeWidth
+            , strokeWidth <| String.fromFloat attrs.strokeWidth
             , viewBox attrs.viewBox
             ]
 
@@ -242,6 +246,12 @@ toHtml attributes (Icon { src, attrs }) =
         src
             |> List.map (Svg.map never)
             |> svg combinedAttributes
+
+
+
+xmlns : String -> Svg.Attribute a
+xmlns s =
+    VirtualDom.property "xmlns" <| Json.Encode.string s
 
 
 makeBuilder : String -> List (Svg Never) -> Icon
@@ -267,12 +277,12 @@ makeName handle =
 
 genDoc : String -> String -> String
 genDoc name source =
-    "{-| " ++ name ++ "\n" ++ (makeIcon source) ++ "\n-}\n"
+    "{-| " ++ name ++ "\n" ++ makeIcon source ++ "\n-}\n"
 
 
 makeIcon : String -> String
 makeIcon source =
-    """<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">""" ++ source ++ "</svg>"
+    "![image](data:image/svg+xml;base64," ++ Base64.encode source ++ ")"
 
 
 makeFunction : List ( String, a, List Node ) -> String -> String
@@ -293,27 +303,27 @@ functionSource nodes name =
         safeName =
             makeName name
     in
-        safeName
-            ++ " : Icon\n"
-            ++ safeName
-            ++ " =\n    makeBuilder \""
-            ++ name
-            ++ "\"\n"
-            ++ "        [ "
-            ++ (nodes |> List.map printNode |> String.join ("\n        , "))
-            ++ "\n        ]"
+    safeName
+        ++ " : Icon\n"
+        ++ safeName
+        ++ " =\n    makeBuilder \""
+        ++ name
+        ++ "\"\n"
+        ++ "        [ "
+        ++ (nodes |> List.map printNode |> String.join "\n        , ")
+        ++ "\n        ]"
 
 
 makeDocumentedFunction : ( String, String ) -> String
 makeDocumentedFunction ( n, source ) =
-    (genDoc n source) ++ (functionSource (HtmlParser.parse source) n)
+    genDoc n source ++ functionSource (HtmlParser.parse source) n
 
 
 printNode : Node -> String
 printNode n =
     case n of
         Element name attrs children ->
-            printNodeName name ++ (printAttrs attrs) ++ (printChildren children)
+            printNodeName name ++ printAttrs attrs ++ printChildren children
 
         Text s ->
             s |> toString
@@ -336,15 +346,15 @@ camelize s =
         upcaseFirstLetter =
             replace (AtMost 1) firstLetter (\x -> x.match |> String.toUpper)
     in
-        case s |> String.split "-" of
-            [] ->
-                ""
+    case s |> String.split "-" of
+        [] ->
+            ""
 
-            head :: [] ->
-                head
+        head :: [] ->
+            head
 
-            head :: tail ->
-                head ++ (tail |> List.map upcaseFirstLetter |> String.join "")
+        head :: tail ->
+            head ++ (tail |> List.map upcaseFirstLetter |> String.join "")
 
 
 printAttrName : String -> String
@@ -356,9 +366,6 @@ printAttrName name =
         "viewbox" ->
             "viewBox"
 
-        "xmlns" ->
-            "xmlSpace"
-
         n ->
             n |> camelize
 
@@ -367,7 +374,7 @@ printAttrs : List ( String, String ) -> String
 printAttrs attrs =
     " [ "
         ++ (attrs
-                |> List.map (\( name, val ) -> (printAttrName name) ++ " " ++ (toString val))
+                |> List.map (\( name, val ) -> printAttrName name ++ " " ++ toString val)
                 |> String.join ", "
            )
         ++ " ]"
