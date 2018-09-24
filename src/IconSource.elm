@@ -277,7 +277,7 @@ makeName handle =
 
 genDoc : String -> String -> String
 genDoc name source =
-    "{-| " ++ name ++ "\n" ++ makeIcon source ++ "\n-}\n"
+    "{-| " ++ name ++ "\n\n" ++ makeIcon source ++ "\n-}\n"
 
 
 makeIcon : String -> String
