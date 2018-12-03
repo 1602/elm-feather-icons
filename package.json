@@ -8,14 +8,16 @@
     "start": "elm-live src/Main.elm --output=elm.js --open",
     "build": "./build.sh",
     "deploy": "gh-pages -d dist",
-    "update-package": "/usr/local/bin/elm-make src/Headless.elm --output source-builder.js && node build.js > ../elm-feather/src/FeatherIcons.elm"
+    "update-package": "elm make src/Headless.elm --output source-builder.js && node build.js > ../elm-feather/src/FeatherIcons.elm"
   },
   "devDependencies": {
     "elm": "^0.18.0",
     "elm-live": "^2.7.4",
     "elm-test": "^0.18.7",
-    "feather-icons": "^4.7.3",
     "gh-pages": "^1.0.0",
     "uglify-js": "^3.1.3"
+  },
+  "dependencies": {
+    "feather-icons": "^4.9.0"
   }
 }

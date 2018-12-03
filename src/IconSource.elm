@@ -32,6 +32,7 @@ renderWithDocs icons =
                 |> (::) "withViewBox"
                 |> (::) "withClass"
                 |> (::) "toHtml"
+                |> (::) "icons"
                 |> String.join "\n        , "
            )
         ++ "\n        )"
@@ -39,6 +40,8 @@ renderWithDocs icons =
         ++ docsHeader icons
         ++ codeHeader
         ++ (icons |> List.map makeDocumentedFunction |> String.join "\n\n\n")
+        ++ "\n\n"
+        ++ makeDictionary icons
 
 
 docsHeader : List ( String, String ) -> String
@@ -60,7 +63,7 @@ Change `FeatherIcons.feather` by the icon you prefer, a list of all icons is vis
 
 All icons of this package are provided as the internal type `Icon`. To turn them into an `Html msg`, simply use the `toHtml` function.
 
-@docs Icon, toHtml
+@docs Icon, toHtml, icons
 
 # Customize Icons
 
@@ -91,6 +94,7 @@ codeHeader =
     """
 
 import Html exposing (Html)
+import Dict exposing (Dict)
 import Svg exposing (Svg, svg)
 import Svg.Attributes exposing (..)
 import VirtualDom
@@ -393,3 +397,11 @@ printChildren children =
                         |> String.join ", "
                    )
                 ++ " ]"
+
+
+makeDictionary : List ( String, String ) -> String
+makeDictionary icons =
+    icons
+        |> List.map (\( name, _ ) -> "( \"" ++ name ++ "\", " ++ makeName name ++ " )")
+        |> String.join "\n    , "
+        |> (\list -> "{-| Dictionary of all icons -}\nicons : Dict String Icon\nicons =\n    [ " ++ list ++ "\n    ] |> Dict.fromList")
