@@ -286,7 +286,11 @@ genDoc name source =
 
 makeIcon : String -> String
 makeIcon source =
-    "![image](data:image/svg+xml;base64," ++ Base64.encode source ++ ")"
+    let
+        svgIcon =
+            """<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">""" ++ source ++ "</svg>"
+    in
+    "![image](data:image/svg+xml;base64," ++ Base64.encode svgIcon ++ ")"
 
 
 makeFunction : List ( String, a, List Node ) -> String -> String

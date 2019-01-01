@@ -18,6 +18,6 @@
     "uglify-js": "^3.1.3"
   },
   "dependencies": {
-    "feather-icons": "^4.9.0"
+    "feather-icons": "4.10.0"
   }
 }
